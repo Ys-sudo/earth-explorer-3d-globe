@@ -1,0 +1,2256 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <title>
+      Cyfrowy Globus Podróżnika - darmowa aplikacja do planowania i zapisywania
+      podróży w pamięci browsera.
+    </title>
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="https://axel-travel.pl/image/getbyid/31057/108/99/0/1/100/108/99/1"
+    />
+    <link
+      rel="icon"
+      type="x-icon"
+      href="https://axel-travel.pl/image/getbyid/31057/108/99/0/1/100/108/99/1"
+    />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Cyfrowy Globus Podróżnika - interaktywny model 3D z pamięcią lokalną do
+      śledzenia historii i planowania podróży po całym świecie i wszystkich
+      krajach świata."
+    />
+    <meta
+      name="keywords"
+      content="aplikacja, interaktywna mapa, punkty na mapie, wyszukiwanie, podświetlanie markerów, UI, panel użytkownika, mapa, hotpoints, linki, szczegóły punktów"
+    />
+    <meta
+      property="og:title"
+      content="Interaktywna Aplikacja Mapowa - Przeglądanie i Wyszukiwanie Punktów"
+    />
+    <meta
+      property="og:description"
+      content="Aplikacja umożliwiająca przeglądanie oraz wyszukiwanie punktów na mapie z możliwością kliknięcia w linki prowadzące do szczegółowych informacji."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://twoja-strona.pl" />
+    <meta
+      property="og:image"
+      content="https://cdn.glitch.global/6061b827-3701-4087-a4b1-a1aec1d09302/earth_lights_2048.png?v=1741899516667"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Interaktywna Aplikacja Mapowa - Przeglądanie i Wyszukiwanie Punktów"
+    />
+    <meta
+      name="twitter:description"
+      content="Aplikacja umożliwiająca przeglądanie oraz wyszukiwanie punktów na mapie, z funkcjami interakcji."
+    />
+    <meta
+      name="twitter:image"
+      content="https://cdn.glitch.global/6061b827-3701-4087-a4b1-a1aec1d09302/earth_lights_2048.png?v=1741899516667"
+    />
+    <style>
+      * {
+        transition-duration: 0.5s;
+        font-family: sans-serif;
+      }
+      /* For Webkit browsers (Chrome, Safari, Edge, etc.) */
+      ::-webkit-scrollbar {
+        width: 3px; /* Scrollbar width */
+        height: 3px; /* Scrollbar height for horizontal scrollbar */
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-color: cyan; /* Color of the scrollbar handle */
+        border-radius: 3px; /* Optional: Rounded corners for the thumb */
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: cyan; /* Darker shade when hovered */
+      }
+
+      ::-webkit-scrollbar-track {
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 10px; /* Optional: Rounded corners for the track */
+      }
+
+      /* For Firefox */
+      scrollbar {
+        width: 3px;
+        height: 3px;
+      }
+
+      scrollbar-thumb {
+        background-color: cyan;
+      }
+
+      scrollbar-thumb:hover {
+        background-color: cyan;
+      }
+
+      scrollbar-track {
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      body {
+        margin: 0;
+        overflow: hidden;
+        background: rgba(0, 0, 0, 0.95);
+        cursor: grab;
+      }
+      body:active {
+        cursor: grabbing;
+      }
+      #hotpoint-controls {
+        position: absolute;
+        top: 100px;
+        left: 10px;
+        cursor: pointer;
+        max-width: 170px;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 0px 5px;
+        overflow-y: auto;
+        max-height: 80vh;
+        border-radius: 5px;
+        z-index: 1000;
+        font-family: sans-serif;
+        font-size: 12px;
+        color: #abffeb;
+      }
+
+      #hotpoint-controls ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      #hotpoint-controls li {
+        margin: 5px;
+        cursor: pointer;
+        padding: 5px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      #hotpoint-controls li:hover {
+        background: #000;
+      }
+      /* Loading overlay */
+      #loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        font-family: sans-serif;
+        font-size: 20px;
+      }
+
+      /* Style for countries that are saved in the wishlist */
+      .saved {
+        background-color: #00ff00; /* Change to your preferred color */
+        color: black; /* Text color */
+        font-weight: bold;
+      }
+      .saved:hover {
+        color: #00ff00;
+      }
+
+      .addButton {
+        margin-left: 10px;
+        border: 1px solid #00ff00;
+        border-radius: 5px;
+        background: rgba(0, 0, 0, 0);
+        color: cyan;
+        cursor: pointer;
+        z-index: 1000;
+        position: relative;
+      }
+      .addButton:hover {
+        background: #00ff00 !important;
+        color: black;
+        font-weight: bold;
+      }
+
+      .saved .addButton {
+        background: black;
+      }
+      #search-input {
+        position: fixed;
+        top: 60px;
+        width: 175px;
+        left: 15px;
+      }
+      #clearButton {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        padding: 10px 20px;
+        background: rgba(0, 0, 0, 0);
+        border: 1px solid #f44336;
+        color: #f44336;
+        font-size: 12px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      #clearButton:hover {
+        background-color: #d32f2f;
+        color: white;
+      }
+
+      .pointhot {
+        width: 90px;
+      }
+      .wrapbtns > button {
+        margin: 2.5px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading indicator -->
+    <div id="loading-screen" style="font-size: 10px">
+      . <span id="progress-text"></span>
+    </div>
+    <iframe
+      style="
+        position: fixed;
+        bottom: 100px;
+        right: 15px;
+        min-width: 350px;
+        min-height: 250px;
+        border: 0px solid black;
+        border-radius: 10px;
+      "
+      id="wikiprev"
+    >
+    </iframe>
+    <div
+      style="
+        position: fixed;
+        font-size: 12px;
+        max-width: 200px;
+        right: 0;
+        top: 0;
+        background: rgba(0, 0, 0, 0.5);
+        color: cyan;
+        padding: 10px;
+      "
+    >
+      <strong style="color: lightgreen">
+        Earth Explorer v.0 <br />Globus podróżnika</strong
+      >
+      <p>
+        Cyfrowy globus zapisujący twoje podróże w pamięci lokalnej. Dodawaj
+        kraje świata w których byłeś i dokumentuj swoje podróże, odwiedź je
+        wszystkie!
+      </p>
+      <br />
+      <small>
+        <b style="color: white">Na marginesie: </b>
+
+        <br />
+        Jeżeli wyczyścisz cache browsera dla tej strony lista zniknie. W trybie
+        prywatnym localstorage nie działa i lista nie zapisze się.
+      </small>
+      <p id="count-p" style="color: white">
+        Aktualna liczba krajów:
+        <strong id="count" style="color: #00ff00">250</strong>
+      </p>
+      <p id="count-p2" style="color: white">
+        Twoje wyniki: <strong id="count2" style="color: cyan">250</strong>
+      </p>
+      <small>
+        <b style="color: white">Pomysły na projekt:</b>
+        <br />
+        Pobierz / Wgraj listę | Tło próżni | Zmienna długość linii | Zmienne
+        tekstury | Tryb jasny | Logowanie + Google + FB | Synchronizacja między
+        urządzeniami (baza danych + rejestracja) | Przyciski do wyników
+        filtracji dla kraju
+      </small>
+    </div>
+    <a href="https://axel-travel.pl">
+      <img
+        src="https://vcdn.merlinx.eu/image//getbyid/507481"
+        alt="Logo"
+        width="100px"
+        style="
+          z-index: 1000;
+          position: fixed;
+          left: 15px;
+          top: 15px;
+          filter: brightness(0) invert(1);
+        "
+      />
+    </a>
+    <!-- Button to clear the visited list -->
+    <button id="clearButton">Wyczyść listę (0)"</button>
+    <script>
+      // Retrieve the visited list from localStorage
+      const visitedList = JSON.parse(localStorage.getItem("visitedlist")) || [];
+
+      // Function to update the button text with the number of visited countries
+      function updateButtonText() {
+        const button = document.getElementById("clearButton");
+        button.textContent = `Wyczyść listę (${visitedList.length})`;
+        const progress = document.getElementById("count2");
+        progress.textContent = `${visitedList.length}`;
+      }
+
+      // Update the button initially
+      updateButtonText();
+
+      // Function to clear the visited list from localStorage
+      function clearVisitedList() {
+        if (visitedList.length === 0) {
+          alert("Nie ma czego usunąć.");
+          return;
+        }
+
+        // Confirm before clearing the list
+        const confirmClear = confirm("Jesteś pewny że chcesz usunąć listę?");
+        if (confirmClear) {
+          // Clear the visited list from localStorage
+          localStorage.removeItem("visitedlist");
+
+          // Reset the visited list array
+          visitedList.length = 0;
+
+          // Update the button text after clearing
+          updateButtonText();
+
+          alert("Wyszyszczono listę pomyślnie, odświeżanie...");
+          window.location.reload();
+        }
+      }
+
+      // Event listener for the button to clear the visited list
+      document
+        .getElementById("clearButton")
+        .addEventListener("click", clearVisitedList);
+    </script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./three.module.js"
+        }
+      }
+    </script>
+    <script type="module">
+      import * as THREE from "./three.module.js";
+      import { OrbitControls } from "./OrbitControls.js";
+
+      // ----------------- Hotpoints Configuration (20 Countries) -----------------
+      const hotpoints = [
+        {
+          name: "Georgia Południowa i Sandwich Południowy",
+          lat: -54.5,
+          lon: -37,
+          link: "https://pl.wikipedia.org/wiki/Georgia%20Po%C5%82udniowa%20i%20Sandwich%20Po%C5%82udniowy",
+        },
+        {
+          name: "Grenada",
+          lat: 12.11666666,
+          lon: -61.66666666,
+          link: "https://pl.wikipedia.org/wiki/Grenada",
+        },
+        {
+          name: "Szwajcaria",
+          lat: 47,
+          lon: 8,
+          link: "https://pl.wikipedia.org/wiki/Szwajcaria",
+        },
+        {
+          name: "Sierra Leone",
+          lat: 8.5,
+          lon: -11.5,
+          link: "https://pl.wikipedia.org/wiki/Sierra%20Leone",
+        },
+        {
+          name: "Węgry",
+          lat: 47,
+          lon: 20,
+          link: "https://pl.wikipedia.org/wiki/W%C4%99gry",
+        },
+        {
+          name: "Tajwan",
+          lat: 23.5,
+          lon: 121,
+          link: "https://pl.wikipedia.org/wiki/Tajwan",
+        },
+        {
+          name: "Wallis i Futuna",
+          lat: -13.3,
+          lon: -176.2,
+          link: "https://pl.wikipedia.org/wiki/Wallis%20i%20Futuna",
+        },
+        {
+          name: "Barbados",
+          lat: 13.16666666,
+          lon: -59.53333333,
+          link: "https://pl.wikipedia.org/wiki/Barbados",
+        },
+        {
+          name: "Pitcairn",
+          lat: -25.06666666,
+          lon: -130.1,
+          link: "https://pl.wikipedia.org/wiki/Pitcairn",
+        },
+        {
+          name: "WybrzeŻe Kości Słoniowej",
+          lat: 8,
+          lon: -5,
+          link: "https://pl.wikipedia.org/wiki/Wybrze%C5%BBe%20Ko%C5%9Bci%20S%C5%82oniowej",
+        },
+        {
+          name: "Tunezja",
+          lat: 34,
+          lon: 9,
+          link: "https://pl.wikipedia.org/wiki/Tunezja",
+        },
+        {
+          name: "Włochy",
+          lat: 42.83333333,
+          lon: 12.83333333,
+          link: "https://pl.wikipedia.org/wiki/W%C5%82ochy",
+        },
+        {
+          name: "Benin",
+          lat: 9.5,
+          lon: 2.25,
+          link: "https://pl.wikipedia.org/wiki/Benin",
+        },
+        {
+          name: "Indonezja",
+          lat: -5,
+          lon: 120,
+          link: "https://pl.wikipedia.org/wiki/Indonezja",
+        },
+        {
+          name: "Republika Zielonego Przylądka",
+          lat: 16.5388,
+          lon: -23.0418,
+          link: "https://pl.wikipedia.org/wiki/Republika%20Zielonego%20Przyl%C4%85dka",
+        },
+        {
+          name: "Saint Kitts i Nevis",
+          lat: 17.33333333,
+          lon: -62.75,
+          link: "https://pl.wikipedia.org/wiki/Saint%20Kitts%20i%20Nevis",
+        },
+        {
+          name: "Laos",
+          lat: 18,
+          lon: 105,
+          link: "https://pl.wikipedia.org/wiki/Laos",
+        },
+        {
+          name: "Antyle Holenderskie",
+          lat: 12.18,
+          lon: -68.25,
+          link: "https://pl.wikipedia.org/wiki/Antyle%20Holenderskie",
+        },
+        {
+          name: "Uganda",
+          lat: 1,
+          lon: 32,
+          link: "https://pl.wikipedia.org/wiki/Uganda",
+        },
+        {
+          name: "Andora",
+          lat: 42.5,
+          lon: 1.5,
+          link: "https://pl.wikipedia.org/wiki/Andora",
+        },
+        {
+          name: "Burundi",
+          lat: -3.5,
+          lon: 30,
+          link: "https://pl.wikipedia.org/wiki/Burundi",
+        },
+        {
+          name: "Południowa Afryka",
+          lat: -29,
+          lon: 24,
+          link: "https://pl.wikipedia.org/wiki/Po%C5%82udniowa%20Afryka",
+        },
+        {
+          name: "Francja",
+          lat: 46,
+          lon: 2,
+          link: "https://pl.wikipedia.org/wiki/Francja",
+        },
+        {
+          name: "Libia",
+          lat: 25,
+          lon: 17,
+          link: "https://pl.wikipedia.org/wiki/Libia",
+        },
+        {
+          name: "Meksyk",
+          lat: 23,
+          lon: -102,
+          link: "https://pl.wikipedia.org/wiki/Meksyk",
+        },
+        {
+          name: "Gabon",
+          lat: -1,
+          lon: 11.75,
+          link: "https://pl.wikipedia.org/wiki/Gabon",
+        },
+        {
+          name: "Mariany Północne",
+          lat: 15.2,
+          lon: 145.75,
+          link: "https://pl.wikipedia.org/wiki/Mariany%20P%C3%B3%C5%82nocne",
+        },
+        {
+          name: "Macedonia Północna",
+          lat: 41.83333333,
+          lon: 22,
+          link: "https://pl.wikipedia.org/wiki/Macedonia%20P%C3%B3%C5%82nocna",
+        },
+        {
+          name: "Chiny",
+          lat: 35,
+          lon: 105,
+          link: "https://pl.wikipedia.org/wiki/Chiny",
+        },
+        {
+          name: "Jemen",
+          lat: 15,
+          lon: 48,
+          link: "https://pl.wikipedia.org/wiki/Jemen",
+        },
+        {
+          name: "Saint-Barthélemy",
+          lat: 18.5,
+          lon: -63.41666666,
+          link: "https://pl.wikipedia.org/wiki/Saint-Barth%C3%A9lemy",
+        },
+        {
+          name: "Guernsey",
+          lat: 49.46666666,
+          lon: -2.58333333,
+          link: "https://pl.wikipedia.org/wiki/Guernsey",
+        },
+        {
+          name: "Wyspy Salomona",
+          lat: -8,
+          lon: 159,
+          link: "https://pl.wikipedia.org/wiki/Wyspy%20Salomona",
+        },
+        {
+          name: "Svalbard i Jan Mayen",
+          lat: 78,
+          lon: 20,
+          link: "https://pl.wikipedia.org/wiki/Svalbard%20i%20Jan%20Mayen",
+        },
+        {
+          name: "Wyspy Owcze",
+          lat: 62,
+          lon: -7,
+          link: "https://pl.wikipedia.org/wiki/Wyspy%20Owcze",
+        },
+        {
+          name: "Uzbekistan",
+          lat: 41,
+          lon: 64,
+          link: "https://pl.wikipedia.org/wiki/Uzbekistan",
+        },
+        {
+          name: "Egipt",
+          lat: 27,
+          lon: 30,
+          link: "https://pl.wikipedia.org/wiki/Egipt",
+        },
+        {
+          name: "Senegal",
+          lat: 14,
+          lon: -14,
+          link: "https://pl.wikipedia.org/wiki/Senegal",
+        },
+        {
+          name: "Sri Lanka",
+          lat: 7,
+          lon: 81,
+          link: "https://pl.wikipedia.org/wiki/Sri%20Lanka",
+        },
+        {
+          name: "Palestyna",
+          lat: 31.9,
+          lon: 35.2,
+          link: "https://pl.wikipedia.org/wiki/Palestyna",
+        },
+        {
+          name: "Bangladesz",
+          lat: 24,
+          lon: 90,
+          link: "https://pl.wikipedia.org/wiki/Bangladesz",
+        },
+        {
+          name: "Peru",
+          lat: -10,
+          lon: -76,
+          link: "https://pl.wikipedia.org/wiki/Peru",
+        },
+        {
+          name: "Singapur",
+          lat: 1.36666666,
+          lon: 103.8,
+          link: "https://pl.wikipedia.org/wiki/Singapur",
+        },
+        {
+          name: "Turcja",
+          lat: 39,
+          lon: 35,
+          link: "https://pl.wikipedia.org/wiki/Turcja",
+        },
+        {
+          name: "Afganistan",
+          lat: 33,
+          lon: 65,
+          link: "https://pl.wikipedia.org/wiki/Afganistan",
+        },
+        {
+          name: "Aruba",
+          lat: 12.5,
+          lon: -69.96666666,
+          link: "https://pl.wikipedia.org/wiki/Aruba",
+        },
+        {
+          name: "Wyspy Cooka",
+          lat: -21.23333333,
+          lon: -159.76666666,
+          link: "https://pl.wikipedia.org/wiki/Wyspy%20Cooka",
+        },
+        {
+          name: "Zjednoczone Królestwo",
+          lat: 54,
+          lon: -2,
+          link: "https://pl.wikipedia.org/wiki/Zjednoczone%20Kr%C3%B3lestwo",
+        },
+        {
+          name: "Zambia",
+          lat: -15,
+          lon: 30,
+          link: "https://pl.wikipedia.org/wiki/Zambia",
+        },
+        {
+          name: "Finlandia",
+          lat: 64,
+          lon: 26,
+          link: "https://pl.wikipedia.org/wiki/Finlandia",
+        },
+        {
+          name: "Niger",
+          lat: 16,
+          lon: 8,
+          link: "https://pl.wikipedia.org/wiki/Niger",
+        },
+        {
+          name: "Wyspa Bożego Narodzenia",
+          lat: -10.5,
+          lon: 105.66666666,
+          link: "https://pl.wikipedia.org/wiki/Wyspa%20Bo%C5%BCego%20Narodzenia",
+        },
+        {
+          name: "Tokelau",
+          lat: -9,
+          lon: -172,
+          link: "https://pl.wikipedia.org/wiki/Tokelau",
+        },
+        {
+          name: "Gwinea Bissau",
+          lat: 12,
+          lon: -15,
+          link: "https://pl.wikipedia.org/wiki/Gwinea%20Bissau",
+        },
+        {
+          name: "Azerbejdżan",
+          lat: 40.5,
+          lon: 47.5,
+          link: "https://pl.wikipedia.org/wiki/Azerbejd%C5%BCan",
+        },
+        {
+          name: "Reunion",
+          lat: -21.15,
+          lon: 55.5,
+          link: "https://pl.wikipedia.org/wiki/Reunion",
+        },
+        {
+          name: "Dżibuti",
+          lat: 11.5,
+          lon: 43,
+          link: "https://pl.wikipedia.org/wiki/D%C5%BCibuti",
+        },
+        {
+          name: "Korea Północna",
+          lat: 40,
+          lon: 127,
+          link: "https://pl.wikipedia.org/wiki/Korea%20P%C3%B3%C5%82nocna",
+        },
+        {
+          name: "Mauritius",
+          lat: -20.28333333,
+          lon: 57.55,
+          link: "https://pl.wikipedia.org/wiki/Mauritius",
+        },
+        {
+          name: "Montserrat",
+          lat: 16.75,
+          lon: -62.2,
+          link: "https://pl.wikipedia.org/wiki/Montserrat",
+        },
+        {
+          name: "Wyspy Dziewicze Stanów Zjednoczonych",
+          lat: 18.35,
+          lon: -64.933333,
+          link: "https://pl.wikipedia.org/wiki/Wyspy%20Dziewicze%20Stan%C3%B3w%20Zjednoczonych",
+        },
+        {
+          name: "Kolumbia",
+          lat: 4,
+          lon: -72,
+          link: "https://pl.wikipedia.org/wiki/Kolumbia",
+        },
+        {
+          name: "Grecja",
+          lat: 39,
+          lon: 22,
+          link: "https://pl.wikipedia.org/wiki/Grecja",
+        },
+        {
+          name: "Chorwacja",
+          lat: 45.16666666,
+          lon: 15.5,
+          link: "https://pl.wikipedia.org/wiki/Chorwacja",
+        },
+        {
+          name: "Maroko",
+          lat: 32,
+          lon: -5,
+          link: "https://pl.wikipedia.org/wiki/Maroko",
+        },
+        {
+          name: "Algieria",
+          lat: 28,
+          lon: 3,
+          link: "https://pl.wikipedia.org/wiki/Algieria",
+        },
+        {
+          name: "Antarktyka",
+          lat: -90,
+          lon: 0,
+          link: "https://pl.wikipedia.org/wiki/Antarktyka",
+        },
+        {
+          name: "Holandia",
+          lat: 52.5,
+          lon: 5.75,
+          link: "https://pl.wikipedia.org/wiki/Holandia",
+        },
+        {
+          name: "Sudan",
+          lat: 15,
+          lon: 30,
+          link: "https://pl.wikipedia.org/wiki/Sudan",
+        },
+        {
+          name: "Fidżi",
+          lat: 17.7134,
+          lon: 178.065,
+          link: "https://pl.wikipedia.org/wiki/Fid%C5%BCi",
+        },
+        {
+          name: "Liechtenstein",
+          lat: 47.26666666,
+          lon: 9.53333333,
+          link: "https://pl.wikipedia.org/wiki/Liechtenstein",
+        },
+        {
+          name: "Nepal",
+          lat: 28,
+          lon: 84,
+          link: "https://pl.wikipedia.org/wiki/Nepal",
+        },
+        {
+          name: "Portoryko",
+          lat: 18.25,
+          lon: -66.5,
+          link: "https://pl.wikipedia.org/wiki/Portoryko",
+        },
+        {
+          name: "Gruzja",
+          lat: 42,
+          lon: 43.5,
+          link: "https://pl.wikipedia.org/wiki/Gruzja",
+        },
+        {
+          name: "Pakistan",
+          lat: 30,
+          lon: 70,
+          link: "https://pl.wikipedia.org/wiki/Pakistan",
+        },
+        {
+          name: "Monako",
+          lat: 43.73333333,
+          lon: 7.4,
+          link: "https://pl.wikipedia.org/wiki/Monako",
+        },
+        {
+          name: "Botswana",
+          lat: -22,
+          lon: 24,
+          link: "https://pl.wikipedia.org/wiki/Botswana",
+        },
+        {
+          name: "Liban",
+          lat: 33.83333333,
+          lon: 35.83333333,
+          link: "https://pl.wikipedia.org/wiki/Liban",
+        },
+        {
+          name: "Papua-Nowa Gwinea",
+          lat: -6,
+          lon: 147,
+          link: "https://pl.wikipedia.org/wiki/Papua-Nowa%20Gwinea",
+        },
+        {
+          name: "Majotta",
+          lat: -12.83333333,
+          lon: 45.16666666,
+          link: "https://pl.wikipedia.org/wiki/Majotta",
+        },
+        {
+          name: "Dominikana",
+          lat: 19,
+          lon: -70.66666666,
+          link: "https://pl.wikipedia.org/wiki/Dominikana",
+        },
+        {
+          name: "Wyspa Norfolk",
+          lat: -29.03333333,
+          lon: 167.95,
+          link: "https://pl.wikipedia.org/wiki/Wyspa%20Norfolk",
+        },
+        {
+          name: "Wyspa Bouveta",
+          lat: 54.4208,
+          lon: 3.3464,
+          link: "https://pl.wikipedia.org/wiki/Wyspa%20Bouveta",
+        },
+        {
+          name: "Katar",
+          lat: 25.5,
+          lon: 51.25,
+          link: "https://pl.wikipedia.org/wiki/Katar",
+        },
+        {
+          name: "Madagaskar",
+          lat: -20,
+          lon: 47,
+          link: "https://pl.wikipedia.org/wiki/Madagaskar",
+        },
+        {
+          name: "Indie",
+          lat: 20,
+          lon: 77,
+          link: "https://pl.wikipedia.org/wiki/Indie",
+        },
+        {
+          name: "Syria",
+          lat: 35,
+          lon: 38,
+          link: "https://pl.wikipedia.org/wiki/Syria",
+        },
+        {
+          name: "Czarnogóra",
+          lat: 42.5,
+          lon: 19.3,
+          link: "https://pl.wikipedia.org/wiki/Czarnog%C3%B3ra",
+        },
+        {
+          name: "Suazi",
+          lat: -26.5,
+          lon: 31.5,
+          link: "https://pl.wikipedia.org/wiki/Suazi",
+        },
+        {
+          name: "Paragwaj",
+          lat: -23,
+          lon: -58,
+          link: "https://pl.wikipedia.org/wiki/Paragwaj",
+        },
+        {
+          name: "Salwador",
+          lat: 13.83333333,
+          lon: -88.91666666,
+          link: "https://pl.wikipedia.org/wiki/Salwador",
+        },
+        {
+          name: "Ukraina",
+          lat: 49,
+          lon: 32,
+          link: "https://pl.wikipedia.org/wiki/Ukraina",
+        },
+        {
+          name: "Wyspa Man",
+          lat: 54.25,
+          lon: -4.5,
+          link: "https://pl.wikipedia.org/wiki/Wyspa%20Man",
+        },
+        {
+          name: "Namibia",
+          lat: -22,
+          lon: 17,
+          link: "https://pl.wikipedia.org/wiki/Namibia",
+        },
+        {
+          name: "Emiraty Arabskie",
+          lat: 24,
+          lon: 54,
+          link: "https://pl.wikipedia.org/wiki/Emiraty%20Arabskie",
+        },
+        {
+          name: "Bułgaria",
+          lat: 43,
+          lon: 25,
+          link: "https://pl.wikipedia.org/wiki/Bu%C5%82garia",
+        },
+        {
+          name: "Grenlandia",
+          lat: 72,
+          lon: -40,
+          link: "https://pl.wikipedia.org/wiki/Grenlandia",
+        },
+        {
+          name: "Niemcy",
+          lat: 51,
+          lon: 9,
+          link: "https://pl.wikipedia.org/wiki/Niemcy",
+        },
+        {
+          name: "Kambodża",
+          lat: 13,
+          lon: 105,
+          link: "https://pl.wikipedia.org/wiki/Kambod%C5%BCa",
+        },
+        {
+          name: "Irak",
+          lat: 33,
+          lon: 44,
+          link: "https://pl.wikipedia.org/wiki/Irak",
+        },
+        {
+          name: "Francuskie Terytoria Południowe i Antarktyczne",
+          lat: -49.25,
+          lon: 69.167,
+          link: "https://pl.wikipedia.org/wiki/Francuskie%20Terytoria%20Po%C5%82udniowe%20i%20Antarktyczne",
+        },
+        {
+          name: "Szwecja",
+          lat: 62,
+          lon: 15,
+          link: "https://pl.wikipedia.org/wiki/Szwecja",
+        },
+        {
+          name: "Kuba",
+          lat: 21.5,
+          lon: -80,
+          link: "https://pl.wikipedia.org/wiki/Kuba",
+        },
+        {
+          name: "Kirgistan",
+          lat: 41,
+          lon: 75,
+          link: "https://pl.wikipedia.org/wiki/Kirgistan",
+        },
+        {
+          name: "Rosja",
+          lat: 60,
+          lon: 100,
+          link: "https://pl.wikipedia.org/wiki/Rosja",
+        },
+        {
+          name: "Malezja",
+          lat: 2.5,
+          lon: 112.5,
+          link: "https://pl.wikipedia.org/wiki/Malezja",
+        },
+        {
+          name: "Wyspy Świętego Tomasza i Książęca",
+          lat: 1,
+          lon: 7,
+          link: "https://pl.wikipedia.org/wiki/Wyspy%20%C5%9Awi%C4%99tego%20Tomasza%20i%20Ksi%C4%85%C5%BC%C4%99ca",
+        },
+        {
+          name: "Cypr",
+          lat: 35,
+          lon: 33,
+          link: "https://pl.wikipedia.org/wiki/Cypr",
+        },
+        {
+          name: "Kanada",
+          lat: 60,
+          lon: -95,
+          link: "https://pl.wikipedia.org/wiki/Kanada",
+        },
+        {
+          name: "Malawi",
+          lat: -13.5,
+          lon: 34,
+          link: "https://pl.wikipedia.org/wiki/Malawi",
+        },
+        {
+          name: "Arabia Saudyjska",
+          lat: 25,
+          lon: 45,
+          link: "https://pl.wikipedia.org/wiki/Arabia%20Saudyjska",
+        },
+        {
+          name: "Bośnia i Hercegowina",
+          lat: 44,
+          lon: 18,
+          link: "https://pl.wikipedia.org/wiki/Bo%C5%9Bnia%20i%20Hercegowina",
+        },
+        {
+          name: "Etiopia",
+          lat: 8,
+          lon: 38,
+          link: "https://pl.wikipedia.org/wiki/Etiopia",
+        },
+        {
+          name: "Hiszpania",
+          lat: 40,
+          lon: -4,
+          link: "https://pl.wikipedia.org/wiki/Hiszpania",
+        },
+        {
+          name: "Słowenia",
+          lat: 46.11666666,
+          lon: 14.81666666,
+          link: "https://pl.wikipedia.org/wiki/S%C5%82owenia",
+        },
+        {
+          name: "Oman",
+          lat: 21,
+          lon: 57,
+          link: "https://pl.wikipedia.org/wiki/Oman",
+        },
+        {
+          name: "Saint-Pierre i Miquelon",
+          lat: 46.83333333,
+          lon: -56.33333333,
+          link: "https://pl.wikipedia.org/wiki/Saint-Pierre%20i%20Miquelon",
+        },
+        {
+          name: "Makau",
+          lat: 22.16666666,
+          lon: 113.55,
+          link: "https://pl.wikipedia.org/wiki/Makau",
+        },
+        {
+          name: "San Marino",
+          lat: 43.76666666,
+          lon: 12.41666666,
+          link: "https://pl.wikipedia.org/wiki/San%20Marino",
+        },
+        {
+          name: "Lesotho",
+          lat: -29.5,
+          lon: 28.5,
+          link: "https://pl.wikipedia.org/wiki/Lesotho",
+        },
+        {
+          name: "Wyspy Marshalla",
+          lat: 9,
+          lon: 168,
+          link: "https://pl.wikipedia.org/wiki/Wyspy%20Marshalla",
+        },
+        {
+          name: "Sint Maarten",
+          lat: 18.033333,
+          lon: -63.05,
+          link: "https://pl.wikipedia.org/wiki/Sint%20Maarten",
+        },
+        {
+          name: "Islandia",
+          lat: 65,
+          lon: -18,
+          link: "https://pl.wikipedia.org/wiki/Islandia",
+        },
+        {
+          name: "Luksemburg",
+          lat: 49.75,
+          lon: 6.16666666,
+          link: "https://pl.wikipedia.org/wiki/Luksemburg",
+        },
+        {
+          name: "Argentyna",
+          lat: -34,
+          lon: -64,
+          link: "https://pl.wikipedia.org/wiki/Argentyna",
+        },
+        {
+          name: "Turks i Caicos",
+          lat: 21.75,
+          lon: -71.58333333,
+          link: "https://pl.wikipedia.org/wiki/Turks%20i%20Caicos",
+        },
+        {
+          name: "Nauru",
+          lat: -0.53333333,
+          lon: 166.91666666,
+          link: "https://pl.wikipedia.org/wiki/Nauru",
+        },
+        {
+          name: "Wyspy Kokosowe",
+          lat: 12.1642,
+          lon: 96.871,
+          link: "https://pl.wikipedia.org/wiki/Wyspy%20Kokosowe",
+        },
+        {
+          name: "Sahara Zachodnia",
+          lat: 24.5,
+          lon: -13,
+          link: "https://pl.wikipedia.org/wiki/Sahara%20Zachodnia",
+        },
+        {
+          name: "Dominika",
+          lat: 15.41666666,
+          lon: -61.33333333,
+          link: "https://pl.wikipedia.org/wiki/Dominika",
+        },
+        {
+          name: "Kostaryka",
+          lat: 10,
+          lon: -84,
+          link: "https://pl.wikipedia.org/wiki/Kostaryka",
+        },
+        {
+          name: "Australia",
+          lat: -27,
+          lon: 133,
+          link: "https://pl.wikipedia.org/wiki/Australia",
+        },
+        {
+          name: "Tajlandia",
+          lat: 15,
+          lon: 100,
+          link: "https://pl.wikipedia.org/wiki/Tajlandia",
+        },
+        {
+          name: "Haiti",
+          lat: 19,
+          lon: -72.41666666,
+          link: "https://pl.wikipedia.org/wiki/Haiti",
+        },
+        {
+          name: "Tuvalu",
+          lat: -8,
+          lon: 178,
+          link: "https://pl.wikipedia.org/wiki/Tuvalu",
+        },
+        {
+          name: "Honduras",
+          lat: 15,
+          lon: -86.5,
+          link: "https://pl.wikipedia.org/wiki/Honduras",
+        },
+        {
+          name: "Gwinea Równikowa",
+          lat: 2,
+          lon: 10,
+          link: "https://pl.wikipedia.org/wiki/Gwinea%20R%C3%B3wnikowa",
+        },
+        {
+          name: "Saint Lucia",
+          lat: 13.88333333,
+          lon: -60.96666666,
+          link: "https://pl.wikipedia.org/wiki/Saint%20Lucia",
+        },
+        {
+          name: "Polinezja Francuska",
+          lat: 17.6797,
+          lon: 149.4068,
+          link: "https://pl.wikipedia.org/wiki/Polinezja%20Francuska",
+        },
+        {
+          name: "Białoruś",
+          lat: 53,
+          lon: 28,
+          link: "https://pl.wikipedia.org/wiki/Bia%C5%82oru%C5%9B",
+        },
+        {
+          name: "Łotwa",
+          lat: 57,
+          lon: 25,
+          link: "https://pl.wikipedia.org/wiki/%C5%81otwa",
+        },
+        {
+          name: "Palau",
+          lat: 7.5,
+          lon: 134.5,
+          link: "https://pl.wikipedia.org/wiki/Palau",
+        },
+        {
+          name: "Gwadelupa",
+          lat: 16.25,
+          lon: -61.583333,
+          link: "https://pl.wikipedia.org/wiki/Gwadelupa",
+        },
+        {
+          name: "Filipiny",
+          lat: 13,
+          lon: 122,
+          link: "https://pl.wikipedia.org/wiki/Filipiny",
+        },
+        {
+          name: "Gibraltar",
+          lat: 36.13333333,
+          lon: -5.35,
+          link: "https://pl.wikipedia.org/wiki/Gibraltar",
+        },
+        {
+          name: "Dania",
+          lat: 56,
+          lon: 10,
+          link: "https://pl.wikipedia.org/wiki/Dania",
+        },
+        {
+          name: "Kamerun",
+          lat: 6,
+          lon: 12,
+          link: "https://pl.wikipedia.org/wiki/Kamerun",
+        },
+        {
+          name: "Gwinea",
+          lat: 11,
+          lon: -10,
+          link: "https://pl.wikipedia.org/wiki/Gwinea",
+        },
+        {
+          name: "Bahrajn",
+          lat: 26,
+          lon: 50.55,
+          link: "https://pl.wikipedia.org/wiki/Bahrajn",
+        },
+        {
+          name: "Surinam",
+          lat: 4,
+          lon: -56,
+          link: "https://pl.wikipedia.org/wiki/Surinam",
+        },
+        {
+          name: "Demokratyczna Republika Konga",
+          lat: 0,
+          lon: 25,
+          link: "https://pl.wikipedia.org/wiki/Demokratyczna%20Republika%20Konga",
+        },
+        {
+          name: "Somalia",
+          lat: 10,
+          lon: 49,
+          link: "https://pl.wikipedia.org/wiki/Somalia",
+        },
+        {
+          name: "Czechy",
+          lat: 49.75,
+          lon: 15.5,
+          link: "https://pl.wikipedia.org/wiki/Czechy",
+        },
+        {
+          name: "Nowa Kaledonia",
+          lat: -21.5,
+          lon: 165.5,
+          link: "https://pl.wikipedia.org/wiki/Nowa%20Kaledonia",
+        },
+        {
+          name: "Vanuatu",
+          lat: -16,
+          lon: 167,
+          link: "https://pl.wikipedia.org/wiki/Vanuatu",
+        },
+        {
+          name: "Wyspa Świętej Heleny, Wyspa Wniebowstąpienia i Tristan da Cunha",
+          lat: -15.95,
+          lon: -5.72,
+          link: "https://pl.wikipedia.org/wiki/Wyspa%20%C5%9Awi%C4%99tej%20Heleny%2C%20Wyspa%20Wniebowst%C4%85pienia%20i%20Tristan%20da%20Cunha",
+        },
+        {
+          name: "Togo",
+          lat: 8,
+          lon: 1.16666666,
+          link: "https://pl.wikipedia.org/wiki/Togo",
+        },
+        {
+          name: "Brytyjskie Wyspy Dziewicze",
+          lat: 18.431383,
+          lon: -64.62305,
+          link: "https://pl.wikipedia.org/wiki/Brytyjskie%20Wyspy%20Dziewicze",
+        },
+        {
+          name: "Kenia",
+          lat: 1,
+          lon: 38,
+          link: "https://pl.wikipedia.org/wiki/Kenia",
+        },
+        {
+          name: "Niue",
+          lat: -19.03333333,
+          lon: -169.86666666,
+          link: "https://pl.wikipedia.org/wiki/Niue",
+        },
+        {
+          name: "Wyspy Heard i McDonalda",
+          lat: 53.0818,
+          lon: 73.5042,
+          link: "https://pl.wikipedia.org/wiki/Wyspy%20Heard%20i%20McDonalda",
+        },
+        {
+          name: "Rwanda",
+          lat: -2,
+          lon: 30,
+          link: "https://pl.wikipedia.org/wiki/Rwanda",
+        },
+        {
+          name: "Estonia",
+          lat: 59,
+          lon: 26,
+          link: "https://pl.wikipedia.org/wiki/Estonia",
+        },
+        {
+          name: "Rumunia",
+          lat: 46,
+          lon: 25,
+          link: "https://pl.wikipedia.org/wiki/Rumunia",
+        },
+        {
+          name: "Trynidad i Tobago",
+          lat: 10.6918,
+          lon: -61.2225,
+          link: "https://pl.wikipedia.org/wiki/Trynidad%20i%20Tobago",
+        },
+        {
+          name: "Gujana",
+          lat: 5,
+          lon: -59,
+          link: "https://pl.wikipedia.org/wiki/Gujana",
+        },
+        {
+          name: "Timor Wschodni",
+          lat: -8.83333333,
+          lon: 125.91666666,
+          link: "https://pl.wikipedia.org/wiki/Timor%20Wschodni",
+        },
+        {
+          name: "Wietnam",
+          lat: 16.16666666,
+          lon: 107.83333333,
+          link: "https://pl.wikipedia.org/wiki/Wietnam",
+        },
+        {
+          name: "Urugwaj",
+          lat: -33,
+          lon: -56,
+          link: "https://pl.wikipedia.org/wiki/Urugwaj",
+        },
+        {
+          name: "Watykan",
+          lat: 41.9,
+          lon: 12.45,
+          link: "https://pl.wikipedia.org/wiki/Watykan",
+        },
+        {
+          name: "Hongkong",
+          lat: 22.267,
+          lon: 114.188,
+          link: "https://pl.wikipedia.org/wiki/Hongkong",
+        },
+        {
+          name: "Austria",
+          lat: 47.33333333,
+          lon: 13.33333333,
+          link: "https://pl.wikipedia.org/wiki/Austria",
+        },
+        {
+          name: "Antigua i Barbuda",
+          lat: 17.05,
+          lon: -61.8,
+          link: "https://pl.wikipedia.org/wiki/Antigua%20i%20Barbuda",
+        },
+        {
+          name: "Turkmenistan",
+          lat: 40,
+          lon: 60,
+          link: "https://pl.wikipedia.org/wiki/Turkmenistan",
+        },
+        {
+          name: "Mozambik",
+          lat: -18.25,
+          lon: 35,
+          link: "https://pl.wikipedia.org/wiki/Mozambik",
+        },
+        {
+          name: "Panama",
+          lat: 9,
+          lon: -80,
+          link: "https://pl.wikipedia.org/wiki/Panama",
+        },
+        {
+          name: "Mikronezja",
+          lat: 6.91666666,
+          lon: 158.25,
+          link: "https://pl.wikipedia.org/wiki/Mikronezja",
+        },
+        {
+          name: "Irlandia",
+          lat: 53,
+          lon: -8,
+          link: "https://pl.wikipedia.org/wiki/Irlandia",
+        },
+        {
+          name: "Curaçao",
+          lat: 12.116667,
+          lon: -68.933333,
+          link: "https://pl.wikipedia.org/wiki/Cura%C3%A7ao",
+        },
+        {
+          name: "Gujana Francuska",
+          lat: 4,
+          lon: -53,
+          link: "https://pl.wikipedia.org/wiki/Gujana%20Francuska",
+        },
+        {
+          name: "Norwegia",
+          lat: 62,
+          lon: 10,
+          link: "https://pl.wikipedia.org/wiki/Norwegia",
+        },
+        {
+          name: "Wyspy Alandzkie",
+          lat: 60.116667,
+          lon: 19.9,
+          link: "https://pl.wikipedia.org/wiki/Wyspy%20Alandzkie",
+        },
+        {
+          name: "Republika Środkowoafrykańska",
+          lat: 7,
+          lon: 21,
+          link: "https://pl.wikipedia.org/wiki/Republika%20%C5%9Arodkowoafryka%C5%84ska",
+        },
+        {
+          name: "Burkina Faso",
+          lat: 13,
+          lon: -2,
+          link: "https://pl.wikipedia.org/wiki/Burkina%20Faso",
+        },
+        {
+          name: "Erytrea",
+          lat: 15,
+          lon: 39,
+          link: "https://pl.wikipedia.org/wiki/Erytrea",
+        },
+        {
+          name: "Tanzania",
+          lat: -6,
+          lon: 35,
+          link: "https://pl.wikipedia.org/wiki/Tanzania",
+        },
+        {
+          name: "Korea Południowa",
+          lat: 37,
+          lon: 127.5,
+          link: "https://pl.wikipedia.org/wiki/Korea%20Po%C5%82udniowa",
+        },
+        {
+          name: "Jordania",
+          lat: 31,
+          lon: 36,
+          link: "https://pl.wikipedia.org/wiki/Jordania",
+        },
+        {
+          name: "Mauretania",
+          lat: 20,
+          lon: -12,
+          link: "https://pl.wikipedia.org/wiki/Mauretania",
+        },
+        {
+          name: "Litwa",
+          lat: 56,
+          lon: 24,
+          link: "https://pl.wikipedia.org/wiki/Litwa",
+        },
+        {
+          name: "Dalekie Wyspy Mniejsze Stanów Zjednoczonych",
+          lat: 19.3,
+          lon: 166.633333,
+          link: "https://pl.wikipedia.org/wiki/Dalekie%20Wyspy%20Mniejsze%20Stan%C3%B3w%20Zjednoczonych",
+        },
+        {
+          name: "Słowacja",
+          lat: 48.66666666,
+          lon: 19.5,
+          link: "https://pl.wikipedia.org/wiki/S%C5%82owacja",
+        },
+        {
+          name: "Angola",
+          lat: -12.5,
+          lon: 18.5,
+          link: "https://pl.wikipedia.org/wiki/Angola",
+        },
+        {
+          name: "Kazachstan",
+          lat: 48.0196,
+          lon: 66.9237,
+          link: "https://pl.wikipedia.org/wiki/Kazachstan",
+        },
+        {
+          name: "Mołdawia",
+          lat: 47,
+          lon: 29,
+          link: "https://pl.wikipedia.org/wiki/Mo%C5%82dawia",
+        },
+        {
+          name: "Mali",
+          lat: 17,
+          lon: -4,
+          link: "https://pl.wikipedia.org/wiki/Mali",
+        },
+        {
+          name: "Falklandy",
+          lat: -51.75,
+          lon: -59,
+          link: "https://pl.wikipedia.org/wiki/Falklandy",
+        },
+        {
+          name: "Armenia",
+          lat: 40,
+          lon: 45,
+          link: "https://pl.wikipedia.org/wiki/Armenia",
+        },
+        {
+          name: "Samoa",
+          lat: -13.58333333,
+          lon: -172.33333333,
+          link: "https://pl.wikipedia.org/wiki/Samoa",
+        },
+        {
+          name: "Jersey",
+          lat: 49.25,
+          lon: -2.16666666,
+          link: "https://pl.wikipedia.org/wiki/Jersey",
+        },
+        {
+          name: "Japonia",
+          lat: 36,
+          lon: 138,
+          link: "https://pl.wikipedia.org/wiki/Japonia",
+        },
+        {
+          name: "Boliwia",
+          lat: -17,
+          lon: -65,
+          link: "https://pl.wikipedia.org/wiki/Boliwia",
+        },
+        {
+          name: "Chile",
+          lat: -30,
+          lon: -71,
+          link: "https://pl.wikipedia.org/wiki/Chile",
+        },
+        {
+          name: "Stany Zjednoczone",
+          lat: 38,
+          lon: -97,
+          link: "https://pl.wikipedia.org/wiki/Stany%20Zjednoczone",
+        },
+        {
+          name: "Saint Vincent i Grenadyny",
+          lat: 13.25,
+          lon: -61.2,
+          link: "https://pl.wikipedia.org/wiki/Saint%20Vincent%20i%20Grenadyny",
+        },
+        {
+          name: "Bermudy",
+          lat: 32.33333333,
+          lon: -64.75,
+          link: "https://pl.wikipedia.org/wiki/Bermudy",
+        },
+        {
+          name: "Seszele",
+          lat: -4.58333333,
+          lon: 55.66666666,
+          link: "https://pl.wikipedia.org/wiki/Seszele",
+        },
+        {
+          name: "Brytyjskie Terytorium Oceanu Indyjskiego",
+          lat: -6,
+          lon: 71.5,
+          link: "https://pl.wikipedia.org/wiki/Brytyjskie%20Terytorium%20Oceanu%20Indyjskiego",
+        },
+        {
+          name: "Gwatemala",
+          lat: 15.5,
+          lon: -90.25,
+          link: "https://pl.wikipedia.org/wiki/Gwatemala",
+        },
+        {
+          name: "Ekwador",
+          lat: -2,
+          lon: -77.5,
+          link: "https://pl.wikipedia.org/wiki/Ekwador",
+        },
+        {
+          name: "Martynika",
+          lat: 14.666667,
+          lon: -61,
+          link: "https://pl.wikipedia.org/wiki/Martynika",
+        },
+        {
+          name: "Tadżykistan",
+          lat: 39,
+          lon: 71,
+          link: "https://pl.wikipedia.org/wiki/Tad%C5%BCykistan",
+        },
+        {
+          name: "Malta",
+          lat: 35.9375,
+          lon: 14.3754,
+          link: "https://pl.wikipedia.org/wiki/Malta",
+        },
+        {
+          name: "Gambia",
+          lat: 13.46666666,
+          lon: -16.56666666,
+          link: "https://pl.wikipedia.org/wiki/Gambia",
+        },
+        {
+          name: "Nigeria",
+          lat: 10,
+          lon: 8,
+          link: "https://pl.wikipedia.org/wiki/Nigeria",
+        },
+        {
+          name: "Bahamy",
+          lat: 25.0343,
+          lon: -77.3963,
+          link: "https://pl.wikipedia.org/wiki/Bahamy",
+        },
+        {
+          name: "Kosowo",
+          lat: 42.666667,
+          lon: 21.166667,
+          link: "https://pl.wikipedia.org/wiki/Kosowo",
+        },
+        {
+          name: "Kuwejt",
+          lat: 29.5,
+          lon: 45.75,
+          link: "https://pl.wikipedia.org/wiki/Kuwejt",
+        },
+        {
+          name: "Malediwy",
+          lat: 3.25,
+          lon: 73,
+          link: "https://pl.wikipedia.org/wiki/Malediwy",
+        },
+        {
+          name: "Sudan",
+          lat: 7,
+          lon: 30,
+          link: "https://pl.wikipedia.org/wiki/Sudan",
+        },
+        {
+          name: "Iran",
+          lat: 32,
+          lon: 53,
+          link: "https://pl.wikipedia.org/wiki/Iran",
+        },
+        {
+          name: "Albania",
+          lat: 41,
+          lon: 20,
+          link: "https://pl.wikipedia.org/wiki/Albania",
+        },
+        {
+          name: "Brazylia",
+          lat: -10,
+          lon: -55,
+          link: "https://pl.wikipedia.org/wiki/Brazylia",
+        },
+        {
+          name: "Serbia",
+          lat: 44,
+          lon: 21,
+          link: "https://pl.wikipedia.org/wiki/Serbia",
+        },
+        {
+          name: "Belize",
+          lat: 17.25,
+          lon: -88.75,
+          link: "https://pl.wikipedia.org/wiki/Belize",
+        },
+        {
+          name: "Mjanma",
+          lat: 22,
+          lon: 98,
+          link: "https://pl.wikipedia.org/wiki/Mjanma",
+        },
+        {
+          name: "Bhutan",
+          lat: 27.5,
+          lon: 90.5,
+          link: "https://pl.wikipedia.org/wiki/Bhutan",
+        },
+        {
+          name: "Wenezuela",
+          lat: 8,
+          lon: -66,
+          link: "https://pl.wikipedia.org/wiki/Wenezuela",
+        },
+        {
+          name: "Liberia",
+          lat: 6.5,
+          lon: -9.5,
+          link: "https://pl.wikipedia.org/wiki/Liberia",
+        },
+        {
+          name: "Jamajka",
+          lat: 18.25,
+          lon: -77.5,
+          link: "https://pl.wikipedia.org/wiki/Jamajka",
+        },
+        {
+          name: "Polska",
+          lat: 52,
+          lon: 20,
+          link: "https://pl.wikipedia.org/wiki/Polska",
+        },
+        {
+          name: "Kajmany",
+          lat: 19.3133,
+          lon: -81.2546,
+          link: "https://pl.wikipedia.org/wiki/Kajmany",
+        },
+        {
+          name: "Brunei",
+          lat: 4.5,
+          lon: 114.66666666,
+          link: "https://pl.wikipedia.org/wiki/Brunei",
+        },
+        {
+          name: "Komory",
+          lat: -12.16666666,
+          lon: 44.25,
+          link: "https://pl.wikipedia.org/wiki/Komory",
+        },
+        {
+          name: "Guam",
+          lat: 13.46666666,
+          lon: 144.78333333,
+          link: "https://pl.wikipedia.org/wiki/Guam",
+        },
+        {
+          name: "Tonga",
+          lat: -20,
+          lon: -175,
+          link: "https://pl.wikipedia.org/wiki/Tonga",
+        },
+        {
+          name: "Kiribati",
+          lat: 1.41666666,
+          lon: 173,
+          link: "https://pl.wikipedia.org/wiki/Kiribati",
+        },
+        {
+          name: "Ghana",
+          lat: 8,
+          lon: -2,
+          link: "https://pl.wikipedia.org/wiki/Ghana",
+        },
+        {
+          name: "Czad",
+          lat: 15,
+          lon: 19,
+          link: "https://pl.wikipedia.org/wiki/Czad",
+        },
+        {
+          name: "Zimbabwe",
+          lat: -20,
+          lon: 30,
+          link: "https://pl.wikipedia.org/wiki/Zimbabwe",
+        },
+        {
+          name: "Saint-Martin",
+          lat: 18.0708,
+          lon: 63.0501,
+          link: "https://pl.wikipedia.org/wiki/Saint-Martin",
+        },
+        {
+          name: "Mongolia",
+          lat: 46,
+          lon: 105,
+          link: "https://pl.wikipedia.org/wiki/Mongolia",
+        },
+        {
+          name: "Portugalia",
+          lat: 39.5,
+          lon: -8,
+          link: "https://pl.wikipedia.org/wiki/Portugalia",
+        },
+        {
+          name: "Samoa Amerykańskie",
+          lat: -14.33333333,
+          lon: -170,
+          link: "https://pl.wikipedia.org/wiki/Samoa%20Ameryka%C5%84skie",
+        },
+        {
+          name: "Kongo",
+          lat: -1,
+          lon: 15,
+          link: "https://pl.wikipedia.org/wiki/Kongo",
+        },
+        {
+          name: "Belgia",
+          lat: 50.83333333,
+          lon: 4,
+          link: "https://pl.wikipedia.org/wiki/Belgia",
+        },
+        {
+          name: "Izrael",
+          lat: 31.47,
+          lon: 35.13,
+          link: "https://pl.wikipedia.org/wiki/Izrael",
+        },
+        {
+          name: "Nowa Zelandia",
+          lat: -41,
+          lon: 174,
+          link: "https://pl.wikipedia.org/wiki/Nowa%20Zelandia",
+        },
+        {
+          name: "Nikaragua",
+          lat: 13,
+          lon: -85,
+          link: "https://pl.wikipedia.org/wiki/Nikaragua",
+        },
+        {
+          name: "Anguilla",
+          lat: 18.25,
+          lon: -63.16666666,
+          link: "https://pl.wikipedia.org/wiki/Anguilla",
+        },
+      ];
+
+      // Global arrays for UI list items and active marker tracking
+      let uiListItems = [];
+      let activeMarkerIndex = -1;
+
+      // ----------------- Global Variables -----------------
+      let camera, scene, renderer, controls;
+      let globe; // the sphere representing Earth
+      let markersGroup; // group for markers (attached to globe so they rotate with it)
+      const markers = []; // store marker meshes for interaction
+
+      init();
+      createUIPanel();
+
+      // Listen for mouse move for interactive marker highlighting
+      window.addEventListener("mousemove", onDocumentMouseMove, false);
+
+      function init() {
+        // Create Scene
+        scene = new THREE.Scene();
+
+        // Camera Setup
+        camera = new THREE.PerspectiveCamera(
+          40,
+          window.innerWidth / window.innerHeight,
+          0.1,
+          1000
+        );
+        camera.position.set(0, 20, 50);
+
+        // Renderer Setup
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.2;
+        renderer.setClearColor(0x000000, 0); // Transparent background
+        document.body.appendChild(renderer.domElement);
+
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0x98f6ff, 1);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(0, 1, 0);
+        scene.add(directionalLight);
+
+        // Loading Manager
+        const loadingManager = new THREE.LoadingManager();
+        loadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {
+          const itemsLeft = itemsTotal - itemsLoaded;
+          document.getElementById("progress-text").textContent =
+            itemsLeft + " item(s) left";
+        };
+        loadingManager.onLoad = function () {
+          document.getElementById("loading-screen").style.display = "none";
+        };
+
+        // Load Earth texture
+        const textureLoader = new THREE.TextureLoader(loadingManager);
+        const earthTexture = textureLoader.load(
+          "https://cdn.glitch.global/6061b827-3701-4087-a4b1-a1aec1d09302/earth_lights_2048.png?v=1741899516667"
+        );
+
+        // Create Earth sphere
+        const sphereGeometry = new THREE.SphereGeometry(10, 74, 74);
+        const sphereMaterial = new THREE.MeshStandardMaterial({
+          map: earthTexture,
+        });
+        globe = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        scene.add(globe);
+
+        // Rotate Earth
+        globe.rotation.y = Math.PI / 2;
+
+        // Create a group for markers and attach it to the globe
+        markersGroup = new THREE.Group();
+        globe.add(markersGroup); // Ensure markers stay attached to the globe
+
+        // Place markers on the globe
+        const globeRadius = 10;
+        hotpoints.forEach((hp, idx) => {
+          // Compute marker position from lat/lon
+          const pos = latLonToVector3(hp.lat, hp.lon, globeRadius + 0.5);
+
+          // Create a marker sphere
+          const markerGeo = new THREE.SphereGeometry(0.2, 16, 16);
+          const markerMat = new THREE.MeshBasicMaterial({ color: 0x00eeff });
+          const marker = new THREE.Mesh(markerGeo, markerMat);
+          marker.position.copy(pos);
+          marker.userData = { link: hp.link, name: hp.name };
+
+          // Store normal for needle updates
+          marker.userData.normal = pos.clone().normalize();
+          // Base & active marker scale
+          marker.userData.baseScale = 1;
+          marker.userData.activeScale = 1.8;
+          // Base & active needle lengths
+          marker.userData.baseNeedleLength = 10;
+          marker.userData.activeNeedleLength = 25;
+          // Base & active line widths (if supported)
+          marker.userData.baseNeedleWidth = 1.5;
+          marker.userData.activeNeedleWidth = 2.5;
+
+          markersGroup.add(marker);
+          markers.push(marker);
+
+          // Create the needle line from the marker outward
+          const needleEnd = pos
+            .clone()
+            .add(
+              marker.userData.normal
+                .clone()
+                .multiplyScalar(marker.userData.baseNeedleLength)
+            );
+          const lineGeo = new THREE.BufferGeometry().setFromPoints([
+            pos,
+            needleEnd,
+          ]);
+          const lineMat = new THREE.LineBasicMaterial({
+            color: 0xffffff,
+            linewidth: marker.userData.baseNeedleWidth,
+          });
+          const needle = new THREE.Line(lineGeo, lineMat);
+
+          markersGroup.add(needle);
+          marker.userData.needle = needle;
+        });
+
+        // Create the Moon
+        const moonTexture = textureLoader.load(
+          "https://cdn.glitch.global/6061b827-3701-4087-a4b1-a1aec1d09302/original.jpg?v=1741910594688"
+        ); // Add a moon texture
+        const moonGeometry = new THREE.SphereGeometry(2, 50, 50); // Smaller size for the moon
+        const moonMaterial = new THREE.MeshStandardMaterial({
+          map: moonTexture,
+        });
+        const moon = new THREE.Mesh(moonGeometry, moonMaterial);
+
+        // Create a group for the moon's orbit
+        const moonOrbit = new THREE.Group(); // This group will orbit around Earth
+        scene.add(moonOrbit);
+
+        // Position the orbit group away from the Earth
+        moonOrbit.position.set(30, 0, 0); // Moon’s distance from Earth
+
+        // Add the moon to the orbit group
+        moonOrbit.add(moon);
+
+        // Animation for rotating the moon around Earth
+        function animateMoon() {
+          moonOrbit.rotation.y += 0.01; // Speed of the moon's orbit
+        }
+
+        // OrbitControls for user interaction
+        controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.minDistance = 20;
+        controls.maxDistance = 100;
+        controls.target.set(0, 0, 0);
+        controls.enableZoom = true;
+        controls.update();
+
+        // Raycaster for marker clicks
+        renderer.domElement.addEventListener("click", onDocumentClick, false);
+        window.addEventListener("resize", onWindowResize);
+
+        // Animation loop
+        function animate() {
+          requestAnimationFrame(animate);
+          animateMoon(); // Update moon position
+          controls.update(); // Update controls
+          renderer.render(scene, camera);
+        }
+
+        animate();
+      }
+
+      // Convert latitude and longitude to a Vector3 position on a sphere
+      // Removed the +180 offset; we rely on globe.rotation.y = Math.PI to align texture
+      function latLonToVector3(lat, lon, radius) {
+        const phi = ((90 - lat) * Math.PI) / 180;
+        const theta = (lon * Math.PI) / 180;
+        const x = radius * Math.sin(phi) * Math.cos(theta);
+        const y = radius * Math.cos(phi);
+        const z = radius * Math.sin(phi) * Math.sin(theta);
+        return new THREE.Vector3(x, y, -z);
+      }
+
+      function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      }
+
+      // On click, raycast against markers; if one is hit, open its link
+      function onDocumentClick(event) {
+        const mouse = new THREE.Vector2();
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        const raycaster = new THREE.Raycaster();
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects(markers);
+        if (intersects.length > 0) {
+          const marker = intersects[0].object;
+          document.getElementById("wikiprev").src = marker.userData.link;
+        }
+      }
+      function createUIPanel() {
+        const panel = document.createElement("div");
+        panel.id = "hotpoint-controls";
+        document.body.appendChild(panel);
+
+        // Create the search input field
+        const searchInput = document.createElement("input");
+        searchInput.type = "text";
+        searchInput.placeholder = "Znajdź kraj";
+        searchInput.id = "search-input";
+        searchInput.style.background = "rgba(5,5,5,0.3)";
+        searchInput.style.borderRadius = "5px";
+        searchInput.style.color = "cyan";
+        searchInput.style.border = "1px solid cyan";
+        searchInput.style.marginBottom = "20px"; // Optional: Space below the search field
+        document.body.appendChild(searchInput);
+
+        const savedCountries =
+          JSON.parse(localStorage.getItem("visitedlist")) || [];
+
+        const list = document.createElement("ul");
+        const uiListItems = []; // Array to store the list items for search functionality
+
+        hotpoints.forEach((hp, idx) => {
+          const li = document.createElement("li");
+          li.innerHTML = `<p class="pointhot">${hp.name}</p>`;
+
+          const addButton = document.createElement("button");
+          const dataButton = document.createElement("button");
+          addButton.classList.add("addButton");
+          dataButton.classList.add("addButton");
+          dataButton.textContent = "☔";
+          addButton.textContent = savedCountries.includes(hp.name) ? "✔" : "✖";
+          if (savedCountries.includes(hp.name)) li.classList.add("saved");
+
+          addButton.addEventListener("click", (e) => {
+            if (!savedCountries.includes(hp.name)) {
+              savedCountries.push(hp.name);
+              addButton.textContent = "✔";
+              li.classList.add("saved");
+            } else {
+              savedCountries.splice(savedCountries.indexOf(hp.name), 1);
+              addButton.textContent = "✖";
+              li.classList.remove("saved");
+            }
+            localStorage.setItem("visitedlist", JSON.stringify(savedCountries));
+            // Retrieve the visited list from localStorage
+            const visitedList =
+              JSON.parse(localStorage.getItem("visitedlist")) || [];
+
+            // Function to update the button text with the number of visited countries
+            function updateButtonText() {
+              const button = document.getElementById("clearButton");
+              button.textContent = `Wyczyść listę (${visitedList.length})`;
+              const progress = document.getElementById("count2");
+              progress.textContent = `${visitedList.length}`;
+            }
+            updateButtonText();
+          });
+          const wrapbtns = document.createElement("div");
+          wrapbtns.classList.add("wrapbtns");
+          wrapbtns.style.width = "75px";
+          wrapbtns.appendChild(addButton);
+          wrapbtns.appendChild(dataButton);
+          li.appendChild(wrapbtns);
+          list.appendChild(li);
+
+          // UI hover -> highlight marker
+          li.addEventListener("mouseover", () => {
+            if (markers[idx]) {
+              highlightMarker(idx, true);
+            }
+            li.style.backgroundColor = "#111";
+          });
+
+          li.addEventListener("mouseout", () => {
+            if (markers[idx] && activeMarkerIndex !== idx) {
+              highlightMarker(idx, false);
+            }
+            li.style.backgroundColor = "";
+          });
+
+          dataButton.addEventListener("click", () => {
+            window.open(hp.link, "_blank");
+          });
+
+          // Store the list item in the uiListItems array for search functionality
+          uiListItems.push(li);
+        });
+
+        panel.appendChild(list);
+
+        // Search functionality
+        searchInput.addEventListener("input", (e) => {
+          const query = e.target.value.toLowerCase();
+
+          uiListItems.forEach((item, idx) => {
+            const hotpointName = hotpoints[idx].name.toLowerCase();
+            if (hotpointName.includes(query)) {
+              item.style.display = ""; // Show the item
+            } else {
+              item.style.display = "none"; // Hide the item
+            }
+          });
+        });
+      }
+
+      // Mouse move handler to update active marker from the 3D side
+      function onDocumentMouseMove(event) {
+        const mouse = new THREE.Vector2();
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        const raycaster = new THREE.Raycaster();
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects(markers);
+
+        let newActiveIndex = -1;
+        if (intersects.length > 0) {
+          const marker = intersects[0].object;
+          newActiveIndex = markers.indexOf(marker);
+        }
+
+        if (newActiveIndex !== activeMarkerIndex) {
+          activeMarkerIndex = newActiveIndex;
+          updateActiveMarker();
+        }
+      }
+
+      // Update all markers based on which marker is currently active
+      function updateActiveMarker() {
+        markers.forEach((marker, idx) => {
+          const isActive = idx === activeMarkerIndex;
+
+          // Update UI highlight
+          if (uiListItems[idx]) {
+            uiListItems[idx].style.backgroundColor = isActive ? "#ddd" : "";
+          }
+
+          // If active, bigger scale & longer needle & different line width
+          highlightMarker(idx, isActive);
+        });
+      }
+
+      // A helper to highlight or unhighlight a specific marker
+      function highlightMarker(index, shouldHighlight) {
+        const marker = markers[index];
+        const needle = marker.userData.needle;
+        const savedCountries =
+          JSON.parse(localStorage.getItem("visitedlist")) || [];
+        const isSaved = savedCountries.includes(hotpoints[index].name); // Check if it's saved
+
+        // Determine marker color (Magenta for saved, Green for active, default otherwise)
+        const markerColor = isSaved || shouldHighlight ? 0x00ff00 : 0x00eeff; // Green for active or saved, blue otherwise
+        const needleColor = isSaved || shouldHighlight ? 0x00ff00 : 0xffffff; // Green for active or saved, white otherwise
+
+        // Scale
+        const scale = shouldHighlight
+          ? marker.userData.activeScale
+          : marker.userData.baseScale;
+        marker.scale.set(scale, scale, scale);
+
+        // Needle length
+        const length = shouldHighlight
+          ? marker.userData.activeNeedleLength
+          : marker.userData.baseNeedleLength;
+        const normal = marker.userData.normal;
+        const pos = marker.position.clone();
+        const newEnd = pos.clone().add(normal.clone().multiplyScalar(length));
+        needle.geometry.setFromPoints([pos, newEnd]);
+
+        // Needle width (note: standard LineBasicMaterial may not support linewidth in all browsers)
+        const newLineWidth = shouldHighlight
+          ? marker.userData.activeNeedleWidth
+          : marker.userData.baseNeedleWidth;
+        needle.material.linewidth = newLineWidth;
+
+        // Apply color to marker and needle
+        marker.material.color.set(markerColor);
+        needle.material.color.set(needleColor);
+      }
+
+      function animate() {
+        requestAnimationFrame(animate);
+        // Rotate the globe slowly so markers (and needles) rotate together
+        globe.rotation.y += 0.0007;
+        controls.update();
+        renderer.render(scene, camera);
+      }
+      animate();
+    </script>
+  </body>
+</html>
