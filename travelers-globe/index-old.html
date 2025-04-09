@@ -100,7 +100,7 @@
       body {
         margin: 0;
         overflow: hidden;
-        background: whitesmoke;
+        background: rgba(0, 0, 0, 0.95);
         cursor: grab;
       }
       body:active {
@@ -112,7 +112,7 @@
         left: 10px;
         cursor: pointer;
         max-width: 170px;
-        background: dodgerblue;
+        background: rgba(255, 255, 255, 0.1);
         padding: 0px 5px;
         overflow-y: auto;
         max-height: 80vh;
@@ -120,7 +120,7 @@
         z-index: 1000;
         font-family: sans-serif;
         font-size: 12px;
-        color: white;
+        color: #abffeb;
       }
 
       #hotpoint-controls ul {
@@ -161,42 +161,38 @@
 
       /* Style for countries that are saved in the wishlist */
       .saved {
-        background-color: lightblue; /* Change to your preferred color */
+        background-color: #00ff00; /* Change to your preferred color */
         color: black; /* Text color */
         font-weight: bold;
       }
       .saved:hover {
-        color: dodgerblue;
+        color: #00ff00;
       }
 
       .addButton {
         margin-left: 10px;
-        border: 1px solid white;
+        border: 1px solid #00ff00;
         border-radius: 5px;
         background: rgba(0, 0, 0, 0);
-        color: white;
+        color: cyan;
         cursor: pointer;
         z-index: 1000;
         position: relative;
       }
       .addButton:hover {
-        background: white !important;
-        color: blue;
+        background: #00ff00 !important;
+        color: black;
         font-weight: bold;
       }
 
       .saved .addButton {
-        background: white;
-        color: blue;
+        background: black;
       }
       #search-input {
         position: fixed;
         top: 60px;
-        width: 160px;
-        left: 10px;
-        border: 1px solid blue;
-        border-radius: 5px;
-        padding: 5px 10px;
+        width: 175px;
+        left: 15px;
       }
       #clearButton {
         position: fixed;
@@ -217,11 +213,6 @@
 
       .pointhot {
         width: 90px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 5px;
-        flex-wrap: wrap;
       }
       .wrapbtns > button {
         margin: 2.5px;
@@ -253,19 +244,19 @@
         max-width: 200px;
         right: 0;
         top: 0;
-        background: rgba(255, 255, 255, 0.75);
-        color: #111;
+        background: rgba(0, 0, 0, 0.5);
+        color: cyan;
         padding: 10px;
       "
     >
-      <strong style="color: blue">Globus podróżnika</strong>
+      <strong style="color: lightgreen">
+        Earth Explorer v.0 <br />Globus podróżnika</strong
+      >
       <p>
         Cyfrowy globus zapisujący twoje podróże w pamięci lokalnej. Dodawaj
         kraje świata w których byłeś i dokumentuj swoje podróże, odwiedź je
         wszystkie!
       </p>
-
-      <!-- 
       <br />
       <small>
         <b style="color: white">Na marginesie: </b>
@@ -273,28 +264,35 @@
         <br />
         Jeżeli wyczyścisz cache browsera dla tej strony lista zniknie. W trybie
         prywatnym localstorage nie działa i lista nie zapisze się.
-      </small> -->
-      <p id="count-p" style="color: #111">
+      </small>
+      <p id="count-p" style="color: white">
         Aktualna liczba krajów:
-        <strong id="count" style="color: blue">250</strong>
+        <strong id="count" style="color: #00ff00">250</strong>
       </p>
-      <p id="count-p2" style="color: #111">
-        Twoje wyniki: <strong id="count2" style="color: blue">250</strong>
+      <p id="count-p2" style="color: white">
+        Twoje wyniki: <strong id="count2" style="color: cyan">250</strong>
       </p>
-      <!-- <small>
+      <small>
         <b style="color: white">Pomysły na projekt:</b>
         <br />
-        Pobierz / Wgraj listę | Tło próżni | Zmienna długość linii | Zmienne tekstury | Tryb jasny | Logowanie +
-        Google + FB | Synchronizacja między urządzeniami (baza danych +
-        rejestracja) | Przyciski do wyników filtracji dla kraju
-      </small> -->
+        Pobierz / Wgraj listę | Tło próżni | Zmienna długość linii | Zmienne
+        tekstury | Tryb jasny | Logowanie + Google + FB | Synchronizacja między
+        urządzeniami (baza danych + rejestracja) | Przyciski do wyników
+        filtracji dla kraju
+      </small>
     </div>
     <a href="https://axel-travel.pl">
       <img
-        src="https://cdn.glitch.global/6061b827-3701-4087-a4b1-a1aec1d09302/axel-travel-logo.png?v=1743012468506"
+        src="https://vcdn.merlinx.eu/image//getbyid/507481"
         alt="Logo"
         width="100px"
-        style="z-index: 1000; position: fixed; left: 15px; top: 15px"
+        style="
+          z-index: 1000;
+          position: fixed;
+          left: 15px;
+          top: 15px;
+          filter: brightness(0) invert(1);
+        "
       />
     </a>
     <!-- Button to clear the visited list -->
@@ -361,1722 +359,1500 @@
           lat: -54.5,
           lon: -37,
           link: "https://pl.wikipedia.org/wiki/Georgia%20Po%C5%82udniowa%20i%20Sandwich%20Po%C5%82udniowy",
-          img: "https://axel-travel.pro/img/flags_svgs/GS.svg",
         },
         {
           name: "Grenada",
           lat: 12.11666666,
           lon: -61.66666666,
           link: "https://pl.wikipedia.org/wiki/Grenada",
-          img: "https://axel-travel.pro/img/flags_svgs/GD.svg",
         },
         {
           name: "Szwajcaria",
           lat: 47,
           lon: 8,
           link: "https://pl.wikipedia.org/wiki/Szwajcaria",
-          img: "https://axel-travel.pro/img/flags_svgs/CH.svg",
         },
         {
           name: "Sierra Leone",
           lat: 8.5,
           lon: -11.5,
           link: "https://pl.wikipedia.org/wiki/Sierra%20Leone",
-          img: "https://axel-travel.pro/img/flags_svgs/SL.svg",
         },
         {
           name: "Węgry",
           lat: 47,
           lon: 20,
           link: "https://pl.wikipedia.org/wiki/W%C4%99gry",
-          img: "https://axel-travel.pro/img/flags_svgs/HU.svg",
         },
         {
           name: "Tajwan",
           lat: 23.5,
           lon: 121,
           link: "https://pl.wikipedia.org/wiki/Tajwan",
-          img: "https://axel-travel.pro/img/flags_svgs/TW.svg",
         },
         {
           name: "Wallis i Futuna",
           lat: -13.3,
           lon: -176.2,
           link: "https://pl.wikipedia.org/wiki/Wallis%20i%20Futuna",
-          img: "https://axel-travel.pro/img/flags_svgs/WF.svg",
         },
         {
           name: "Barbados",
           lat: 13.16666666,
           lon: -59.53333333,
           link: "https://pl.wikipedia.org/wiki/Barbados",
-          img: "https://axel-travel.pro/img/flags_svgs/BB.svg",
         },
         {
           name: "Pitcairn",
           lat: -25.06666666,
           lon: -130.1,
           link: "https://pl.wikipedia.org/wiki/Pitcairn",
-          img: "https://axel-travel.pro/img/flags_svgs/PN.svg",
         },
         {
-          name: "Wybrzeże Kości Słoniowej",
+          name: "WybrzeŻe Kości Słoniowej",
           lat: 8,
           lon: -5,
           link: "https://pl.wikipedia.org/wiki/Wybrze%C5%BBe%20Ko%C5%9Bci%20S%C5%82oniowej",
-          img: "https://axel-travel.pro/img/flags_svgs/CI.svg",
         },
         {
           name: "Tunezja",
           lat: 34,
           lon: 9,
           link: "https://pl.wikipedia.org/wiki/Tunezja",
-          img: "https://axel-travel.pro/img/flags_svgs/TN.svg",
         },
         {
           name: "Włochy",
           lat: 42.83333333,
           lon: 12.83333333,
           link: "https://pl.wikipedia.org/wiki/W%C5%82ochy",
-          img: "https://axel-travel.pro/img/flags_svgs/IT.svg",
         },
         {
           name: "Benin",
           lat: 9.5,
           lon: 2.25,
           link: "https://pl.wikipedia.org/wiki/Benin",
-          img: "https://axel-travel.pro/img/flags_svgs/BJ.svg",
         },
         {
           name: "Indonezja",
           lat: -5,
           lon: 120,
           link: "https://pl.wikipedia.org/wiki/Indonezja",
-          img: "https://axel-travel.pro/img/flags_svgs/ID.svg",
         },
         {
           name: "Republika Zielonego Przylądka",
           lat: 16.5388,
           lon: -23.0418,
           link: "https://pl.wikipedia.org/wiki/Republika%20Zielonego%20Przyl%C4%85dka",
-          img: "https://axel-travel.pro/img/flags_svgs/CV.svg",
         },
         {
           name: "Saint Kitts i Nevis",
           lat: 17.33333333,
           lon: -62.75,
           link: "https://pl.wikipedia.org/wiki/Saint%20Kitts%20i%20Nevis",
-          img: "https://axel-travel.pro/img/flags_svgs/KN.svg",
         },
         {
           name: "Laos",
           lat: 18,
           lon: 105,
           link: "https://pl.wikipedia.org/wiki/Laos",
-          img: "https://axel-travel.pro/img/flags_svgs/LA.svg",
+        },
+        {
+          name: "Antyle Holenderskie",
+          lat: 12.18,
+          lon: -68.25,
+          link: "https://pl.wikipedia.org/wiki/Antyle%20Holenderskie",
         },
         {
           name: "Uganda",
           lat: 1,
           lon: 32,
           link: "https://pl.wikipedia.org/wiki/Uganda",
-          img: "https://axel-travel.pro/img/flags_svgs/UG.svg",
         },
         {
           name: "Andora",
           lat: 42.5,
           lon: 1.5,
           link: "https://pl.wikipedia.org/wiki/Andora",
-          img: "https://axel-travel.pro/img/flags_svgs/AD.svg",
         },
         {
           name: "Burundi",
           lat: -3.5,
           lon: 30,
           link: "https://pl.wikipedia.org/wiki/Burundi",
-          img: "https://axel-travel.pro/img/flags_svgs/BI.svg",
         },
         {
           name: "Południowa Afryka",
           lat: -29,
           lon: 24,
           link: "https://pl.wikipedia.org/wiki/Po%C5%82udniowa%20Afryka",
-          img: "https://axel-travel.pro/img/flags_svgs/ZA.svg",
         },
         {
           name: "Francja",
           lat: 46,
           lon: 2,
           link: "https://pl.wikipedia.org/wiki/Francja",
-          img: "https://axel-travel.pro/img/flags_svgs/FR.svg",
         },
         {
           name: "Libia",
           lat: 25,
           lon: 17,
           link: "https://pl.wikipedia.org/wiki/Libia",
-          img: "https://axel-travel.pro/img/flags_svgs/LY.svg",
         },
         {
           name: "Meksyk",
           lat: 23,
           lon: -102,
           link: "https://pl.wikipedia.org/wiki/Meksyk",
-          img: "https://axel-travel.pro/img/flags_svgs/MX.svg",
         },
         {
           name: "Gabon",
           lat: -1,
           lon: 11.75,
           link: "https://pl.wikipedia.org/wiki/Gabon",
-          img: "https://axel-travel.pro/img/flags_svgs/GA.svg",
+        },
+        {
+          name: "Mariany Północne",
+          lat: 15.2,
+          lon: 145.75,
+          link: "https://pl.wikipedia.org/wiki/Mariany%20P%C3%B3%C5%82nocne",
         },
         {
           name: "Macedonia Północna",
           lat: 41.83333333,
           lon: 22,
           link: "https://pl.wikipedia.org/wiki/Macedonia%20P%C3%B3%C5%82nocna",
-          img: "https://axel-travel.pro/img/flags_svgs/MK.svg",
         },
         {
           name: "Chiny",
           lat: 35,
           lon: 105,
           link: "https://pl.wikipedia.org/wiki/Chiny",
-          img: "https://axel-travel.pro/img/flags_svgs/CN.svg",
         },
         {
           name: "Jemen",
           lat: 15,
           lon: 48,
           link: "https://pl.wikipedia.org/wiki/Jemen",
-          img: "https://axel-travel.pro/img/flags_svgs/YE.svg",
         },
         {
           name: "Saint-Barthélemy",
           lat: 18.5,
           lon: -63.41666666,
           link: "https://pl.wikipedia.org/wiki/Saint-Barth%C3%A9lemy",
-          img: "https://axel-travel.pro/img/flags_svgs/BL.svg",
         },
         {
           name: "Guernsey",
           lat: 49.46666666,
           lon: -2.58333333,
           link: "https://pl.wikipedia.org/wiki/Guernsey",
-          img: "https://axel-travel.pro/img/flags_svgs/GG.svg",
         },
         {
           name: "Wyspy Salomona",
           lat: -8,
           lon: 159,
           link: "https://pl.wikipedia.org/wiki/Wyspy%20Salomona",
-          img: "https://axel-travel.pro/img/flags_svgs/SB.svg",
         },
         {
           name: "Svalbard i Jan Mayen",
           lat: 78,
           lon: 20,
           link: "https://pl.wikipedia.org/wiki/Svalbard%20i%20Jan%20Mayen",
-          img: "https://axel-travel.pro/img/flags_svgs/SJ.svg",
+        },
+        {
+          name: "Wyspy Owcze",
+          lat: 62,
+          lon: -7,
+          link: "https://pl.wikipedia.org/wiki/Wyspy%20Owcze",
         },
         {
           name: "Uzbekistan",
           lat: 41,
           lon: 64,
           link: "https://pl.wikipedia.org/wiki/Uzbekistan",
-          img: "https://axel-travel.pro/img/flags_svgs/UZ.svg",
         },
         {
           name: "Egipt",
           lat: 27,
           lon: 30,
           link: "https://pl.wikipedia.org/wiki/Egipt",
-          img: "https://axel-travel.pro/img/flags_svgs/EG.svg",
         },
         {
           name: "Senegal",
           lat: 14,
           lon: -14,
           link: "https://pl.wikipedia.org/wiki/Senegal",
-          img: "https://axel-travel.pro/img/flags_svgs/SN.svg",
         },
         {
           name: "Sri Lanka",
           lat: 7,
           lon: 81,
           link: "https://pl.wikipedia.org/wiki/Sri%20Lanka",
-          img: "https://axel-travel.pro/img/flags_svgs/LK.svg",
         },
-        /*{
+        {
           name: "Palestyna",
           lat: 31.9,
           lon: 35.2,
           link: "https://pl.wikipedia.org/wiki/Palestyna",
-          img: "https://axel-travel.pro/img/flags_svgs/PS.svg"
-        },*/
+        },
         {
           name: "Bangladesz",
           lat: 24,
           lon: 90,
           link: "https://pl.wikipedia.org/wiki/Bangladesz",
-          img: "https://axel-travel.pro/img/flags_svgs/BD.svg",
         },
         {
           name: "Peru",
           lat: -10,
           lon: -76,
           link: "https://pl.wikipedia.org/wiki/Peru",
-          img: "https://axel-travel.pro/img/flags_svgs/PE.svg",
         },
         {
           name: "Singapur",
           lat: 1.36666666,
           lon: 103.8,
           link: "https://pl.wikipedia.org/wiki/Singapur",
-          img: "https://axel-travel.pro/img/flags_svgs/SG.svg",
         },
         {
           name: "Turcja",
           lat: 39,
           lon: 35,
           link: "https://pl.wikipedia.org/wiki/Turcja",
-          img: "https://axel-travel.pro/img/flags_svgs/TR.svg",
         },
         {
           name: "Afganistan",
           lat: 33,
           lon: 65,
           link: "https://pl.wikipedia.org/wiki/Afganistan",
-          img: "https://axel-travel.pro/img/flags_svgs/AF.svg",
         },
         {
           name: "Aruba",
           lat: 12.5,
           lon: -69.96666666,
           link: "https://pl.wikipedia.org/wiki/Aruba",
-          img: "https://axel-travel.pro/img/flags_svgs/AW.svg",
         },
         {
           name: "Wyspy Cooka",
           lat: -21.23333333,
           lon: -159.76666666,
           link: "https://pl.wikipedia.org/wiki/Wyspy%20Cooka",
-          img: "https://axel-travel.pro/img/flags_svgs/CK.svg",
         },
         {
           name: "Zjednoczone Królestwo",
           lat: 54,
           lon: -2,
           link: "https://pl.wikipedia.org/wiki/Zjednoczone%20Kr%C3%B3lestwo",
-          img: "https://axel-travel.pro/img/flags_svgs/GB.svg",
         },
         {
           name: "Zambia",
           lat: -15,
           lon: 30,
           link: "https://pl.wikipedia.org/wiki/Zambia",
-          img: "https://axel-travel.pro/img/flags_svgs/ZM.svg",
         },
         {
           name: "Finlandia",
           lat: 64,
           lon: 26,
           link: "https://pl.wikipedia.org/wiki/Finlandia",
-          img: "https://axel-travel.pro/img/flags_svgs/FI.svg",
         },
         {
           name: "Niger",
           lat: 16,
           lon: 8,
           link: "https://pl.wikipedia.org/wiki/Niger",
-          img: "https://axel-travel.pro/img/flags_svgs/NG.svg",
         },
-        /*{
+        {
           name: "Wyspa Bożego Narodzenia",
           lat: -10.5,
           lon: 105.66666666,
           link: "https://pl.wikipedia.org/wiki/Wyspa%20Bo%C5%BCego%20Narodzenia",
-          img: "https://axel-travel.pro/img/flags_svgs/CS.svg"
-        },*/
+        },
         {
           name: "Tokelau",
           lat: -9,
           lon: -172,
           link: "https://pl.wikipedia.org/wiki/Tokelau",
-          img: "https://axel-travel.pro/img/flags_svgs/TK.svg",
         },
         {
           name: "Gwinea Bissau",
           lat: 12,
           lon: -15,
           link: "https://pl.wikipedia.org/wiki/Gwinea%20Bissau",
-          img: "https://axel-travel.pro/img/flags_svgs/GW.svg",
         },
         {
           name: "Azerbejdżan",
           lat: 40.5,
           lon: 47.5,
           link: "https://pl.wikipedia.org/wiki/Azerbejd%C5%BCan",
-          img: "https://axel-travel.pro/img/flags_svgs/AZ.svg",
         },
         {
           name: "Reunion",
           lat: -21.15,
           lon: 55.5,
           link: "https://pl.wikipedia.org/wiki/Reunion",
-          img: "https://axel-travel.pro/img/flags_svgs/RE.svg",
         },
         {
           name: "Dżibuti",
           lat: 11.5,
           lon: 43,
           link: "https://pl.wikipedia.org/wiki/D%C5%BCibuti",
-          img: "https://axel-travel.pro/img/flags_svgs/DJ.svg",
         },
-        /*{
+        {
           name: "Korea Północna",
           lat: 40,
           lon: 127,
           link: "https://pl.wikipedia.org/wiki/Korea%20P%C3%B3%C5%82nocna",
-          img: "https://axel-travel.pro/img/flags_svgs/KN.svg"
-        },*/
+        },
         {
           name: "Mauritius",
           lat: -20.28333333,
           lon: 57.55,
           link: "https://pl.wikipedia.org/wiki/Mauritius",
-          img: "https://axel-travel.pro/img/flags_svgs/MU.svg",
         },
         {
           name: "Montserrat",
           lat: 16.75,
           lon: -62.2,
           link: "https://pl.wikipedia.org/wiki/Montserrat",
-          img: "https://axel-travel.pro/img/flags_svgs/MS.svg",
         },
-        /*{
+        {
           name: "Wyspy Dziewicze Stanów Zjednoczonych",
           lat: 18.35,
           lon: -64.933333,
           link: "https://pl.wikipedia.org/wiki/Wyspy%20Dziewicze%20Stan%C3%B3w%20Zjednoczonych",
-          img: "https://axel-travel.pro/img/flags_svgs/VI.svg"
-        },*/
+        },
         {
           name: "Kolumbia",
           lat: 4,
           lon: -72,
           link: "https://pl.wikipedia.org/wiki/Kolumbia",
-          img: "https://axel-travel.pro/img/flags_svgs/CO.svg",
         },
         {
           name: "Grecja",
           lat: 39,
           lon: 22,
           link: "https://pl.wikipedia.org/wiki/Grecja",
-          img: "https://axel-travel.pro/img/flags_svgs/GR.svg",
         },
         {
           name: "Chorwacja",
           lat: 45.16666666,
           lon: 15.5,
           link: "https://pl.wikipedia.org/wiki/Chorwacja",
-          img: "https://axel-travel.pro/img/flags_svgs/HR.svg",
         },
         {
           name: "Maroko",
           lat: 32,
           lon: -5,
           link: "https://pl.wikipedia.org/wiki/Maroko",
-          img: "https://axel-travel.pro/img/flags_svgs/MA.svg",
         },
         {
           name: "Algieria",
           lat: 28,
           lon: 3,
           link: "https://pl.wikipedia.org/wiki/Algieria",
-          img: "https://axel-travel.pro/img/flags_svgs/DZ.svg",
         },
-        /*{
+        {
           name: "Antarktyka",
           lat: -90,
           lon: 0,
           link: "https://pl.wikipedia.org/wiki/Antarktyka",
-          img: "https://axel-travel.pro/img/flags_svgs/AQ.svg"
-        },*/
+        },
         {
           name: "Holandia",
           lat: 52.5,
           lon: 5.75,
           link: "https://pl.wikipedia.org/wiki/Holandia",
-          img: "https://axel-travel.pro/img/flags_svgs/NL.svg",
         },
         {
           name: "Sudan",
           lat: 15,
           lon: 30,
           link: "https://pl.wikipedia.org/wiki/Sudan",
-          img: "https://axel-travel.pro/img/flags_svgs/SS.svg",
         },
         {
           name: "Fidżi",
           lat: 17.7134,
           lon: 178.065,
           link: "https://pl.wikipedia.org/wiki/Fid%C5%BCi",
-          img: "https://axel-travel.pro/img/flags_svgs/FJ.svg",
         },
         {
           name: "Liechtenstein",
           lat: 47.26666666,
           lon: 9.53333333,
           link: "https://pl.wikipedia.org/wiki/Liechtenstein",
-          img: "https://axel-travel.pro/img/flags_svgs/LI.svg",
         },
         {
           name: "Nepal",
           lat: 28,
           lon: 84,
           link: "https://pl.wikipedia.org/wiki/Nepal",
-          img: "https://axel-travel.pro/img/flags_svgs/NP.svg",
         },
         {
           name: "Portoryko",
           lat: 18.25,
           lon: -66.5,
           link: "https://pl.wikipedia.org/wiki/Portoryko",
-          img: "https://axel-travel.pro/img/flags_svgs/PR.svg",
         },
         {
           name: "Gruzja",
           lat: 42,
           lon: 43.5,
           link: "https://pl.wikipedia.org/wiki/Gruzja",
-          img: "https://axel-travel.pro/img/flags_svgs/GE.svg",
         },
         {
           name: "Pakistan",
           lat: 30,
           lon: 70,
           link: "https://pl.wikipedia.org/wiki/Pakistan",
-          img: "https://axel-travel.pro/img/flags_svgs/PK.svg",
         },
         {
           name: "Monako",
           lat: 43.73333333,
           lon: 7.4,
           link: "https://pl.wikipedia.org/wiki/Monako",
-          img: "https://axel-travel.pro/img/flags_svgs/MC.svg",
         },
         {
           name: "Botswana",
           lat: -22,
           lon: 24,
           link: "https://pl.wikipedia.org/wiki/Botswana",
-          img: "https://axel-travel.pro/img/flags_svgs/BW.svg",
         },
         {
           name: "Liban",
           lat: 33.83333333,
           lon: 35.83333333,
           link: "https://pl.wikipedia.org/wiki/Liban",
-          img: "https://axel-travel.pro/img/flags_svgs/LY.svg",
         },
         {
           name: "Papua-Nowa Gwinea",
           lat: -6,
           lon: 147,
           link: "https://pl.wikipedia.org/wiki/Papua-Nowa%20Gwinea",
-          img: "https://axel-travel.pro/img/flags_svgs/PG.svg",
         },
         {
           name: "Majotta",
           lat: -12.83333333,
           lon: 45.16666666,
           link: "https://pl.wikipedia.org/wiki/Majotta",
-          img: "https://axel-travel.pro/img/flags_svgs/fr.svg",
         },
         {
           name: "Dominikana",
           lat: 19,
           lon: -70.66666666,
           link: "https://pl.wikipedia.org/wiki/Dominikana",
-          img: "https://axel-travel.pro/img/flags_svgs/DO.svg",
         },
-        /*{
+        {
           name: "Wyspa Norfolk",
           lat: -29.03333333,
           lon: 167.95,
           link: "https://pl.wikipedia.org/wiki/Wyspa%20Norfolk",
-          img: "https://axel-travel.pro/img/flags_svgs/NF.svg"
-        },*/
+        },
         {
           name: "Wyspa Bouveta",
           lat: 54.4208,
           lon: 3.3464,
           link: "https://pl.wikipedia.org/wiki/Wyspa%20Bouveta",
-          img: "https://axel-travel.pro/img/flags_svgs/BV.svg",
         },
         {
           name: "Katar",
           lat: 25.5,
           lon: 51.25,
           link: "https://pl.wikipedia.org/wiki/Katar",
-          img: "https://axel-travel.pro/img/flags_svgs/fr.svg",
         },
         {
           name: "Madagaskar",
           lat: -20,
           lon: 47,
           link: "https://pl.wikipedia.org/wiki/Madagaskar",
-          img: "https://axel-travel.pro/img/flags_svgs/MG.svg",
         },
         {
           name: "Indie",
           lat: 20,
           lon: 77,
           link: "https://pl.wikipedia.org/wiki/Indie",
-          img: "https://axel-travel.pro/img/flags_svgs/IN.svg",
         },
-        /*{
+        {
           name: "Syria",
           lat: 35,
           lon: 38,
           link: "https://pl.wikipedia.org/wiki/Syria",
-          img: "https://axel-travel.pro/img/flags_svgs/SY.svg"
-        },*/
+        },
         {
           name: "Czarnogóra",
           lat: 42.5,
           lon: 19.3,
           link: "https://pl.wikipedia.org/wiki/Czarnog%C3%B3ra",
-          img: "https://axel-travel.pro/img/flags_svgs/ME.svg",
         },
         {
           name: "Suazi",
           lat: -26.5,
           lon: 31.5,
           link: "https://pl.wikipedia.org/wiki/Suazi",
-          img: "https://axel-travel.pro/img/flags_svgs/fr.svg",
         },
         {
           name: "Paragwaj",
           lat: -23,
           lon: -58,
           link: "https://pl.wikipedia.org/wiki/Paragwaj",
-          img: "https://axel-travel.pro/img/flags_svgs/PY.svg",
         },
         {
           name: "Salwador",
           lat: 13.83333333,
           lon: -88.91666666,
           link: "https://pl.wikipedia.org/wiki/Salwador",
-          img: "https://axel-travel.pro/img/flags_svgs/SV.svg",
         },
         {
           name: "Ukraina",
           lat: 49,
           lon: 32,
           link: "https://pl.wikipedia.org/wiki/Ukraina",
-          img: "https://axel-travel.pro/img/flags_svgs/UA.svg",
         },
         {
           name: "Wyspa Man",
           lat: 54.25,
           lon: -4.5,
           link: "https://pl.wikipedia.org/wiki/Wyspa%20Man",
-          img: "https://axel-travel.pro/img/flags_svgs/IM.svg",
         },
         {
           name: "Namibia",
           lat: -22,
           lon: 17,
           link: "https://pl.wikipedia.org/wiki/Namibia",
-          img: "https://axel-travel.pro/img/flags_svgs/NA.svg",
         },
         {
           name: "Emiraty Arabskie",
           lat: 24,
           lon: 54,
           link: "https://pl.wikipedia.org/wiki/Emiraty%20Arabskie",
-          img: "https://axel-travel.pro/img/flags_svgs/AE.svg",
         },
         {
           name: "Bułgaria",
           lat: 43,
           lon: 25,
           link: "https://pl.wikipedia.org/wiki/Bu%C5%82garia",
-          img: "https://axel-travel.pro/img/flags_svgs/BG.svg",
         },
         {
           name: "Grenlandia",
           lat: 72,
           lon: -40,
           link: "https://pl.wikipedia.org/wiki/Grenlandia",
-          img: "https://axel-travel.pro/img/flags_svgs/GL.svg",
         },
         {
           name: "Niemcy",
           lat: 51,
           lon: 9,
           link: "https://pl.wikipedia.org/wiki/Niemcy",
-          img: "https://axel-travel.pro/img/flags_svgs/DE.svg",
         },
         {
           name: "Kambodża",
           lat: 13,
           lon: 105,
           link: "https://pl.wikipedia.org/wiki/Kambod%C5%BCa",
-          img: "https://axel-travel.pro/img/flags_svgs/KH.svg",
         },
         {
           name: "Irak",
           lat: 33,
           lon: 44,
           link: "https://pl.wikipedia.org/wiki/Irak",
-          img: "https://axel-travel.pro/img/flags_svgs/IQ.svg",
         },
         {
           name: "Francuskie Terytoria Południowe i Antarktyczne",
           lat: -49.25,
           lon: 69.167,
           link: "https://pl.wikipedia.org/wiki/Francuskie%20Terytoria%20Po%C5%82udniowe%20i%20Antarktyczne",
-          img: "https://axel-travel.pro/img/flags_svgs/FR.svg",
         },
         {
           name: "Szwecja",
           lat: 62,
           lon: 15,
           link: "https://pl.wikipedia.org/wiki/Szwecja",
-          img: "https://axel-travel.pro/img/flags_svgs/SE.svg",
         },
-        /*{
+        {
           name: "Kuba",
           lat: 21.5,
           lon: -80,
           link: "https://pl.wikipedia.org/wiki/Kuba",
-          img: "https://axel-travel.pro/img/flags_svgs/CU.svg"
-        },*/
+        },
         {
           name: "Kirgistan",
           lat: 41,
           lon: 75,
           link: "https://pl.wikipedia.org/wiki/Kirgistan",
-          img: "https://axel-travel.pro/img/flags_svgs/KG.svg",
         },
         {
           name: "Rosja",
           lat: 60,
           lon: 100,
           link: "https://pl.wikipedia.org/wiki/Rosja",
-          img: "https://axel-travel.pro/img/flags_svgs/RO.svg",
         },
         {
           name: "Malezja",
           lat: 2.5,
           lon: 112.5,
           link: "https://pl.wikipedia.org/wiki/Malezja",
-          img: "https://axel-travel.pro/img/flags_svgs/MY.svg",
         },
         {
           name: "Wyspy Świętego Tomasza i Książęca",
           lat: 1,
           lon: 7,
           link: "https://pl.wikipedia.org/wiki/Wyspy%20%C5%9Awi%C4%99tego%20Tomasza%20i%20Ksi%C4%85%C5%BC%C4%99ca",
-          img: "https://axel-travel.pro/img/flags_svgs/ST.svg",
         },
         {
           name: "Cypr",
           lat: 35,
           lon: 33,
           link: "https://pl.wikipedia.org/wiki/Cypr",
-          img: "https://axel-travel.pro/img/flags_svgs/CY.svg",
         },
         {
           name: "Kanada",
           lat: 60,
           lon: -95,
           link: "https://pl.wikipedia.org/wiki/Kanada",
-          img: "https://axel-travel.pro/img/flags_svgs/CA.svg",
         },
         {
           name: "Malawi",
           lat: -13.5,
           lon: 34,
           link: "https://pl.wikipedia.org/wiki/Malawi",
-          img: "https://axel-travel.pro/img/flags_svgs/MW.svg",
         },
         {
           name: "Arabia Saudyjska",
           lat: 25,
           lon: 45,
           link: "https://pl.wikipedia.org/wiki/Arabia%20Saudyjska",
-          img: "https://axel-travel.pro/img/flags_svgs/SA.svg",
         },
         {
           name: "Bośnia i Hercegowina",
           lat: 44,
           lon: 18,
           link: "https://pl.wikipedia.org/wiki/Bo%C5%9Bnia%20i%20Hercegowina",
-          img: "https://axel-travel.pro/img/flags_svgs/BA.svg",
         },
         {
           name: "Etiopia",
           lat: 8,
           lon: 38,
           link: "https://pl.wikipedia.org/wiki/Etiopia",
-          img: "https://axel-travel.pro/img/flags_svgs/ET.svg",
         },
         {
           name: "Hiszpania",
           lat: 40,
           lon: -4,
           link: "https://pl.wikipedia.org/wiki/Hiszpania",
-          img: "https://axel-travel.pro/img/flags_svgs/ES.svg",
         },
         {
           name: "Słowenia",
           lat: 46.11666666,
           lon: 14.81666666,
           link: "https://pl.wikipedia.org/wiki/S%C5%82owenia",
-          img: "https://axel-travel.pro/img/flags_svgs/SI.svg",
         },
         {
           name: "Oman",
           lat: 21,
           lon: 57,
           link: "https://pl.wikipedia.org/wiki/Oman",
-          img: "https://axel-travel.pro/img/flags_svgs/OM.svg",
         },
         {
           name: "Saint-Pierre i Miquelon",
           lat: 46.83333333,
           lon: -56.33333333,
           link: "https://pl.wikipedia.org/wiki/Saint-Pierre%20i%20Miquelon",
-          img: "https://axel-travel.pro/img/flags_svgs/PM.svg",
         },
         {
           name: "Makau",
           lat: 22.16666666,
           lon: 113.55,
           link: "https://pl.wikipedia.org/wiki/Makau",
-          img: "https://axel-travel.pro/img/flags_svgs/MO.svg",
         },
         {
           name: "San Marino",
           lat: 43.76666666,
           lon: 12.41666666,
           link: "https://pl.wikipedia.org/wiki/San%20Marino",
-          img: "https://axel-travel.pro/img/flags_svgs/SM.svg",
         },
         {
           name: "Lesotho",
           lat: -29.5,
           lon: 28.5,
           link: "https://pl.wikipedia.org/wiki/Lesotho",
-          img: "https://axel-travel.pro/img/flags_svgs/LS.svg",
         },
-        /*{
+        {
           name: "Wyspy Marshalla",
           lat: 9,
           lon: 168,
           link: "https://pl.wikipedia.org/wiki/Wyspy%20Marshalla",
-          img: "https://axel-travel.pro/img/flags_svgs/MH.svg"
-        },*/
+        },
         {
           name: "Sint Maarten",
           lat: 18.033333,
           lon: -63.05,
           link: "https://pl.wikipedia.org/wiki/Sint%20Maarten",
-          img: "https://axel-travel.pro/img/flags_svgs/SX.svg",
         },
         {
           name: "Islandia",
           lat: 65,
           lon: -18,
           link: "https://pl.wikipedia.org/wiki/Islandia",
-          img: "https://axel-travel.pro/img/flags_svgs/IS.svg",
         },
         {
           name: "Luksemburg",
           lat: 49.75,
           lon: 6.16666666,
           link: "https://pl.wikipedia.org/wiki/Luksemburg",
-          img: "https://axel-travel.pro/img/flags_svgs/LU.svg",
         },
         {
           name: "Argentyna",
           lat: -34,
           lon: -64,
           link: "https://pl.wikipedia.org/wiki/Argentyna",
-          img: "https://axel-travel.pro/img/flags_svgs/AR.svg",
         },
         {
           name: "Turks i Caicos",
           lat: 21.75,
           lon: -71.58333333,
           link: "https://pl.wikipedia.org/wiki/Turks%20i%20Caicos",
-          img: "https://axel-travel.pro/img/flags_svgs/TC.svg",
         },
         {
           name: "Nauru",
           lat: -0.53333333,
           lon: 166.91666666,
           link: "https://pl.wikipedia.org/wiki/Nauru",
-          img: "https://axel-travel.pro/img/flags_svgs/NR.svg",
         },
-        /*{
+        {
           name: "Wyspy Kokosowe",
           lat: 12.1642,
           lon: 96.871,
           link: "https://pl.wikipedia.org/wiki/Wyspy%20Kokosowe",
-          img: "https://axel-travel.pro/img/flags_svgs/CC.svg"
         },
         {
           name: "Sahara Zachodnia",
           lat: 24.5,
           lon: -13,
           link: "https://pl.wikipedia.org/wiki/Sahara%20Zachodnia",
-          img: "https://axel-travel.pro/img/flags_svgs/EH.svg"
-        },*/
+        },
         {
           name: "Dominika",
           lat: 15.41666666,
           lon: -61.33333333,
           link: "https://pl.wikipedia.org/wiki/Dominika",
-          img: "https://axel-travel.pro/img/flags_svgs/DM.svg",
         },
         {
           name: "Kostaryka",
           lat: 10,
           lon: -84,
           link: "https://pl.wikipedia.org/wiki/Kostaryka",
-          img: "https://axel-travel.pro/img/flags_svgs/CR.svg",
         },
         {
           name: "Australia",
           lat: -27,
           lon: 133,
           link: "https://pl.wikipedia.org/wiki/Australia",
-          img: "https://axel-travel.pro/img/flags_svgs/AU.svg",
         },
         {
           name: "Tajlandia",
           lat: 15,
           lon: 100,
           link: "https://pl.wikipedia.org/wiki/Tajlandia",
-          img: "https://axel-travel.pro/img/flags_svgs/TH.svg",
         },
         {
           name: "Haiti",
           lat: 19,
           lon: -72.41666666,
           link: "https://pl.wikipedia.org/wiki/Haiti",
-          img: "https://axel-travel.pro/img/flags_svgs/HT.svg",
         },
         {
           name: "Tuvalu",
           lat: -8,
           lon: 178,
           link: "https://pl.wikipedia.org/wiki/Tuvalu",
-          img: "https://axel-travel.pro/img/flags_svgs/TV.svg",
         },
         {
           name: "Honduras",
           lat: 15,
           lon: -86.5,
           link: "https://pl.wikipedia.org/wiki/Honduras",
-          img: "https://axel-travel.pro/img/flags_svgs/HN.svg",
         },
         {
           name: "Gwinea Równikowa",
           lat: 2,
           lon: 10,
           link: "https://pl.wikipedia.org/wiki/Gwinea%20R%C3%B3wnikowa",
-          img: "https://axel-travel.pro/img/flags_svgs/GN.svg",
         },
         {
           name: "Saint Lucia",
           lat: 13.88333333,
           lon: -60.96666666,
           link: "https://pl.wikipedia.org/wiki/Saint%20Lucia",
-          img: "https://axel-travel.pro/img/flags_svgs/LC.svg",
         },
         {
           name: "Polinezja Francuska",
           lat: 17.6797,
           lon: 149.4068,
           link: "https://pl.wikipedia.org/wiki/Polinezja%20Francuska",
-          img: "https://axel-travel.pro/img/flags_svgs/PF.svg",
         },
         {
           name: "Białoruś",
           lat: 53,
           lon: 28,
           link: "https://pl.wikipedia.org/wiki/Bia%C5%82oru%C5%9B",
-          img: "https://axel-travel.pro/img/flags_svgs/BY.svg",
         },
         {
           name: "Łotwa",
           lat: 57,
           lon: 25,
           link: "https://pl.wikipedia.org/wiki/%C5%81otwa",
-          img: "https://axel-travel.pro/img/flags_svgs/LV.svg",
         },
-        /*{
+        {
           name: "Palau",
           lat: 7.5,
           lon: 134.5,
           link: "https://pl.wikipedia.org/wiki/Palau",
-          img: "https://axel-travel.pro/img/flags_svgs/PW.svg"
-        },*/
+        },
         {
           name: "Gwadelupa",
           lat: 16.25,
           lon: -61.583333,
           link: "https://pl.wikipedia.org/wiki/Gwadelupa",
-          img: "https://axel-travel.pro/img/flags_svgs/GP.svg",
         },
         {
           name: "Filipiny",
           lat: 13,
           lon: 122,
           link: "https://pl.wikipedia.org/wiki/Filipiny",
-          img: "https://axel-travel.pro/img/flags_svgs/PH.svg",
         },
         {
           name: "Gibraltar",
           lat: 36.13333333,
           lon: -5.35,
           link: "https://pl.wikipedia.org/wiki/Gibraltar",
-          img: "https://axel-travel.pro/img/flags_svgs/GI.svg",
         },
         {
           name: "Dania",
           lat: 56,
           lon: 10,
           link: "https://pl.wikipedia.org/wiki/Dania",
-          img: "https://axel-travel.pro/img/flags_svgs/DK.svg",
         },
         {
           name: "Kamerun",
           lat: 6,
           lon: 12,
           link: "https://pl.wikipedia.org/wiki/Kamerun",
-          img: "https://axel-travel.pro/img/flags_svgs/CM.svg",
         },
         {
           name: "Gwinea",
           lat: 11,
           lon: -10,
           link: "https://pl.wikipedia.org/wiki/Gwinea",
-          img: "https://axel-travel.pro/img/flags_svgs/GN.svg",
         },
         {
           name: "Bahrajn",
           lat: 26,
           lon: 50.55,
           link: "https://pl.wikipedia.org/wiki/Bahrajn",
-          img: "https://axel-travel.pro/img/flags_svgs/BH.svg",
         },
         {
           name: "Surinam",
           lat: 4,
           lon: -56,
           link: "https://pl.wikipedia.org/wiki/Surinam",
-          img: "https://axel-travel.pro/img/flags_svgs/SR.svg",
         },
         {
           name: "Demokratyczna Republika Konga",
           lat: 0,
           lon: 25,
           link: "https://pl.wikipedia.org/wiki/Demokratyczna%20Republika%20Konga",
-          img: "https://axel-travel.pro/img/flags_svgs/CD.svg",
         },
         {
           name: "Somalia",
           lat: 10,
           lon: 49,
           link: "https://pl.wikipedia.org/wiki/Somalia",
-          img: "https://axel-travel.pro/img/flags_svgs/SO.svg",
         },
         {
           name: "Czechy",
           lat: 49.75,
           lon: 15.5,
           link: "https://pl.wikipedia.org/wiki/Czechy",
-          img: "https://axel-travel.pro/img/flags_svgs/CZ.svg",
         },
         {
           name: "Nowa Kaledonia",
           lat: -21.5,
           lon: 165.5,
           link: "https://pl.wikipedia.org/wiki/Nowa%20Kaledonia",
-          img: "https://axel-travel.pro/img/flags_svgs/NC.svg",
         },
         {
           name: "Vanuatu",
           lat: -16,
           lon: 167,
           link: "https://pl.wikipedia.org/wiki/Vanuatu",
-          img: "https://axel-travel.pro/img/flags_svgs/VU.svg",
         },
         {
           name: "Wyspa Świętej Heleny, Wyspa Wniebowstąpienia i Tristan da Cunha",
           lat: -15.95,
           lon: -5.72,
           link: "https://pl.wikipedia.org/wiki/Wyspa%20%C5%9Awi%C4%99tej%20Heleny%2C%20Wyspa%20Wniebowst%C4%85pienia%20i%20Tristan%20da%20Cunha",
-          img: "https://axel-travel.pro/img/flags_svgs/SH.svg",
         },
         {
           name: "Togo",
           lat: 8,
           lon: 1.16666666,
           link: "https://pl.wikipedia.org/wiki/Togo",
-          img: "https://axel-travel.pro/img/flags_svgs/TG.svg",
         },
         {
           name: "Brytyjskie Wyspy Dziewicze",
           lat: 18.431383,
           lon: -64.62305,
           link: "https://pl.wikipedia.org/wiki/Brytyjskie%20Wyspy%20Dziewicze",
-          img: "https://axel-travel.pro/img/flags_svgs/VG.svg",
         },
         {
           name: "Kenia",
           lat: 1,
           lon: 38,
           link: "https://pl.wikipedia.org/wiki/Kenia",
-          img: "https://axel-travel.pro/img/flags_svgs/KE.svg",
         },
         {
           name: "Niue",
           lat: -19.03333333,
           lon: -169.86666666,
           link: "https://pl.wikipedia.org/wiki/Niue",
-          img: "https://axel-travel.pro/img/flags_svgs/NU.svg",
         },
-        /*{
+        {
           name: "Wyspy Heard i McDonalda",
           lat: 53.0818,
           lon: 73.5042,
           link: "https://pl.wikipedia.org/wiki/Wyspy%20Heard%20i%20McDonalda",
-          img: "https://axel-travel.pro/img/flags_svgs/HM.svg"
-        },*/
+        },
         {
           name: "Rwanda",
           lat: -2,
           lon: 30,
           link: "https://pl.wikipedia.org/wiki/Rwanda",
-          img: "https://axel-travel.pro/img/flags_svgs/RW.svg",
         },
         {
           name: "Estonia",
           lat: 59,
           lon: 26,
           link: "https://pl.wikipedia.org/wiki/Estonia",
-          img: "https://axel-travel.pro/img/flags_svgs/EE.svg",
         },
         {
           name: "Rumunia",
           lat: 46,
           lon: 25,
           link: "https://pl.wikipedia.org/wiki/Rumunia",
-          img: "https://axel-travel.pro/img/flags_svgs/RO.svg",
         },
         {
           name: "Trynidad i Tobago",
           lat: 10.6918,
           lon: -61.2225,
           link: "https://pl.wikipedia.org/wiki/Trynidad%20i%20Tobago",
-          img: "https://axel-travel.pro/img/flags_svgs/TT.svg",
         },
         {
           name: "Gujana",
           lat: 5,
           lon: -59,
           link: "https://pl.wikipedia.org/wiki/Gujana",
-          img: "https://axel-travel.pro/img/flags_svgs/GY.svg",
         },
         {
           name: "Timor Wschodni",
           lat: -8.83333333,
           lon: 125.91666666,
           link: "https://pl.wikipedia.org/wiki/Timor%20Wschodni",
-          img: "https://axel-travel.pro/img/flags_svgs/TL.svg",
         },
         {
           name: "Wietnam",
           lat: 16.16666666,
           lon: 107.83333333,
           link: "https://pl.wikipedia.org/wiki/Wietnam",
-          img: "https://axel-travel.pro/img/flags_svgs/VN.svg",
         },
         {
           name: "Urugwaj",
           lat: -33,
           lon: -56,
           link: "https://pl.wikipedia.org/wiki/Urugwaj",
-          img: "https://axel-travel.pro/img/flags_svgs/UY.svg",
         },
         {
           name: "Watykan",
           lat: 41.9,
           lon: 12.45,
           link: "https://pl.wikipedia.org/wiki/Watykan",
-          img: "https://axel-travel.pro/img/flags_svgs/VA.svg",
         },
         {
           name: "Hongkong",
           lat: 22.267,
           lon: 114.188,
           link: "https://pl.wikipedia.org/wiki/Hongkong",
-          img: "https://axel-travel.pro/img/flags_svgs/HK.svg",
         },
         {
           name: "Austria",
           lat: 47.33333333,
           lon: 13.33333333,
           link: "https://pl.wikipedia.org/wiki/Austria",
-          img: "https://axel-travel.pro/img/flags_svgs/AT.svg",
         },
         {
           name: "Antigua i Barbuda",
           lat: 17.05,
           lon: -61.8,
           link: "https://pl.wikipedia.org/wiki/Antigua%20i%20Barbuda",
-          img: "https://axel-travel.pro/img/flags_svgs/AG.svg",
         },
         {
           name: "Turkmenistan",
           lat: 40,
           lon: 60,
           link: "https://pl.wikipedia.org/wiki/Turkmenistan",
-          img: "https://axel-travel.pro/img/flags_svgs/TM.svg",
         },
         {
           name: "Mozambik",
           lat: -18.25,
           lon: 35,
           link: "https://pl.wikipedia.org/wiki/Mozambik",
-          img: "https://axel-travel.pro/img/flags_svgs/MZ.svg",
         },
         {
           name: "Panama",
           lat: 9,
           lon: -80,
           link: "https://pl.wikipedia.org/wiki/Panama",
-          img: "https://axel-travel.pro/img/flags_svgs/PA.svg",
         },
-        /*{
+        {
           name: "Mikronezja",
           lat: 6.91666666,
           lon: 158.25,
           link: "https://pl.wikipedia.org/wiki/Mikronezja",
-          img: "https://axel-travel.pro/img/flags_svgs/FM.svg"
-        },*/
+        },
         {
           name: "Irlandia",
           lat: 53,
           lon: -8,
           link: "https://pl.wikipedia.org/wiki/Irlandia",
-          img: "https://axel-travel.pro/img/flags_svgs/IE.svg",
         },
         {
           name: "Curaçao",
           lat: 12.116667,
           lon: -68.933333,
           link: "https://pl.wikipedia.org/wiki/Cura%C3%A7ao",
-          img: "https://axel-travel.pro/img/flags_svgs/CW.svg",
         },
         {
           name: "Gujana Francuska",
           lat: 4,
           lon: -53,
           link: "https://pl.wikipedia.org/wiki/Gujana%20Francuska",
-          img: "https://axel-travel.pro/img/flags_svgs/GF.svg",
         },
         {
           name: "Norwegia",
           lat: 62,
           lon: 10,
           link: "https://pl.wikipedia.org/wiki/Norwegia",
-          img: "https://axel-travel.pro/img/flags_svgs/NO.svg",
         },
         {
           name: "Wyspy Alandzkie",
           lat: 60.116667,
           lon: 19.9,
           link: "https://pl.wikipedia.org/wiki/Wyspy%20Alandzkie",
-          img: "https://axel-travel.pro/img/flags_svgs/AX.svg",
         },
         {
           name: "Republika Środkowoafrykańska",
           lat: 7,
           lon: 21,
           link: "https://pl.wikipedia.org/wiki/Republika%20%C5%9Arodkowoafryka%C5%84ska",
-          img: "https://axel-travel.pro/img/flags_svgs/CF.svg",
         },
         {
           name: "Burkina Faso",
           lat: 13,
           lon: -2,
           link: "https://pl.wikipedia.org/wiki/Burkina%20Faso",
-          img: "https://axel-travel.pro/img/flags_svgs/BF.svg",
         },
         {
           name: "Erytrea",
           lat: 15,
           lon: 39,
           link: "https://pl.wikipedia.org/wiki/Erytrea",
-          img: "https://axel-travel.pro/img/flags_svgs/ER.svg",
         },
         {
           name: "Tanzania",
           lat: -6,
           lon: 35,
           link: "https://pl.wikipedia.org/wiki/Tanzania",
-          img: "https://axel-travel.pro/img/flags_svgs/TZ.svg",
         },
         {
           name: "Korea Południowa",
           lat: 37,
           lon: 127.5,
           link: "https://pl.wikipedia.org/wiki/Korea%20Po%C5%82udniowa",
-          img: "https://axel-travel.pro/img/flags_svgs/KR.svg",
         },
         {
           name: "Jordania",
           lat: 31,
           lon: 36,
           link: "https://pl.wikipedia.org/wiki/Jordania",
-          img: "https://axel-travel.pro/img/flags_svgs/JO.svg",
         },
         {
           name: "Mauretania",
           lat: 20,
           lon: -12,
           link: "https://pl.wikipedia.org/wiki/Mauretania",
-          img: "https://axel-travel.pro/img/flags_svgs/MR.svg",
         },
         {
           name: "Litwa",
           lat: 56,
           lon: 24,
           link: "https://pl.wikipedia.org/wiki/Litwa",
-          img: "https://axel-travel.pro/img/flags_svgs/LT.svg",
         },
-        /*{
+        {
           name: "Dalekie Wyspy Mniejsze Stanów Zjednoczonych",
           lat: 19.3,
           lon: 166.633333,
           link: "https://pl.wikipedia.org/wiki/Dalekie%20Wyspy%20Mniejsze%20Stan%C3%B3w%20Zjednoczonych",
-          img: "https://axel-travel.pro/img/flags_svgs/UM.svg"
-        },*/
+        },
         {
           name: "Słowacja",
           lat: 48.66666666,
           lon: 19.5,
           link: "https://pl.wikipedia.org/wiki/S%C5%82owacja",
-          img: "https://axel-travel.pro/img/flags_svgs/SK.svg",
         },
         {
           name: "Angola",
           lat: -12.5,
           lon: 18.5,
           link: "https://pl.wikipedia.org/wiki/Angola",
-          img: "https://axel-travel.pro/img/flags_svgs/AO.svg",
         },
         {
           name: "Kazachstan",
           lat: 48.0196,
           lon: 66.9237,
           link: "https://pl.wikipedia.org/wiki/Kazachstan",
-          img: "https://axel-travel.pro/img/flags_svgs/KZ.svg",
         },
         {
           name: "Mołdawia",
           lat: 47,
           lon: 29,
           link: "https://pl.wikipedia.org/wiki/Mo%C5%82dawia",
-          img: "https://axel-travel.pro/img/flags_svgs/MD.svg",
         },
         {
           name: "Mali",
           lat: 17,
           lon: -4,
           link: "https://pl.wikipedia.org/wiki/Mali",
-          img: "https://axel-travel.pro/img/flags_svgs/ML.svg",
         },
         {
           name: "Falklandy",
           lat: -51.75,
           lon: -59,
           link: "https://pl.wikipedia.org/wiki/Falklandy",
-          img: "https://axel-travel.pro/img/flags_svgs/FK.svg",
         },
         {
           name: "Armenia",
           lat: 40,
           lon: 45,
           link: "https://pl.wikipedia.org/wiki/Armenia",
-          img: "https://axel-travel.pro/img/flags_svgs/AM.svg",
         },
         {
           name: "Samoa",
           lat: -13.58333333,
           lon: -172.33333333,
           link: "https://pl.wikipedia.org/wiki/Samoa",
-          img: "https://axel-travel.pro/img/flags_svgs/WS.svg",
         },
         {
           name: "Jersey",
           lat: 49.25,
           lon: -2.16666666,
           link: "https://pl.wikipedia.org/wiki/Jersey",
-          img: "https://axel-travel.pro/img/flags_svgs/JE.svg",
         },
         {
           name: "Japonia",
           lat: 36,
           lon: 138,
           link: "https://pl.wikipedia.org/wiki/Japonia",
-          img: "https://axel-travel.pro/img/flags_svgs/JP.svg",
         },
         {
           name: "Boliwia",
           lat: -17,
           lon: -65,
           link: "https://pl.wikipedia.org/wiki/Boliwia",
-          img: "https://axel-travel.pro/img/flags_svgs/BO.svg",
         },
         {
           name: "Chile",
           lat: -30,
           lon: -71,
           link: "https://pl.wikipedia.org/wiki/Chile",
-          img: "https://axel-travel.pro/img/flags_svgs/CL.svg",
         },
         {
           name: "Stany Zjednoczone",
           lat: 38,
           lon: -97,
           link: "https://pl.wikipedia.org/wiki/Stany%20Zjednoczone",
-          img: "https://axel-travel.pro/img/flags_svgs/US.svg",
         },
         {
           name: "Saint Vincent i Grenadyny",
           lat: 13.25,
           lon: -61.2,
           link: "https://pl.wikipedia.org/wiki/Saint%20Vincent%20i%20Grenadyny",
-          img: "https://axel-travel.pro/img/flags_svgs/VC.svg",
         },
         {
           name: "Bermudy",
           lat: 32.33333333,
           lon: -64.75,
           link: "https://pl.wikipedia.org/wiki/Bermudy",
-          img: "https://axel-travel.pro/img/flags_svgs/BM.svg",
         },
         {
           name: "Seszele",
           lat: -4.58333333,
           lon: 55.66666666,
           link: "https://pl.wikipedia.org/wiki/Seszele",
-          img: "https://axel-travel.pro/img/flags_svgs/SC.svg",
         },
         {
           name: "Brytyjskie Terytorium Oceanu Indyjskiego",
           lat: -6,
           lon: 71.5,
           link: "https://pl.wikipedia.org/wiki/Brytyjskie%20Terytorium%20Oceanu%20Indyjskiego",
-          img: "https://axel-travel.pro/img/flags_svgs/GB.svg",
         },
         {
           name: "Gwatemala",
           lat: 15.5,
           lon: -90.25,
           link: "https://pl.wikipedia.org/wiki/Gwatemala",
-          img: "https://axel-travel.pro/img/flags_svgs/GT.svg",
         },
         {
           name: "Ekwador",
           lat: -2,
           lon: -77.5,
           link: "https://pl.wikipedia.org/wiki/Ekwador",
-          img: "https://axel-travel.pro/img/flags_svgs/EC.svg",
         },
         {
           name: "Martynika",
           lat: 14.666667,
           lon: -61,
           link: "https://pl.wikipedia.org/wiki/Martynika",
-          img: "https://axel-travel.pro/img/flags_svgs/MQ.svg",
         },
         {
           name: "Tadżykistan",
           lat: 39,
           lon: 71,
           link: "https://pl.wikipedia.org/wiki/Tad%C5%BCykistan",
-          img: "https://axel-travel.pro/img/flags_svgs/TJ.svg",
         },
         {
           name: "Malta",
           lat: 35.9375,
           lon: 14.3754,
           link: "https://pl.wikipedia.org/wiki/Malta",
-          img: "https://axel-travel.pro/img/flags_svgs/MT.svg",
         },
         {
           name: "Gambia",
           lat: 13.46666666,
           lon: -16.56666666,
           link: "https://pl.wikipedia.org/wiki/Gambia",
-          img: "https://axel-travel.pro/img/flags_svgs/GM.svg",
         },
         {
           name: "Nigeria",
           lat: 10,
           lon: 8,
           link: "https://pl.wikipedia.org/wiki/Nigeria",
-          img: "https://axel-travel.pro/img/flags_svgs/NG.svg",
         },
         {
           name: "Bahamy",
           lat: 25.0343,
           lon: -77.3963,
           link: "https://pl.wikipedia.org/wiki/Bahamy",
-          img: "https://axel-travel.pro/img/flags_svgs/BS.svg",
+        },
+        {
+          name: "Kosowo",
+          lat: 42.666667,
+          lon: 21.166667,
+          link: "https://pl.wikipedia.org/wiki/Kosowo",
         },
         {
           name: "Kuwejt",
           lat: 29.5,
           lon: 45.75,
           link: "https://pl.wikipedia.org/wiki/Kuwejt",
-          img: "https://axel-travel.pro/img/flags_svgs/KW.svg",
         },
         {
           name: "Malediwy",
           lat: 3.25,
           lon: 73,
           link: "https://pl.wikipedia.org/wiki/Malediwy",
-          img: "https://axel-travel.pro/img/flags_svgs/MV.svg",
         },
         {
           name: "Sudan",
           lat: 7,
           lon: 30,
           link: "https://pl.wikipedia.org/wiki/Sudan",
-          img: "https://axel-travel.pro/img/flags_svgs/SD.svg",
         },
-        /*{
+        {
           name: "Iran",
           lat: 32,
           lon: 53,
           link: "https://pl.wikipedia.org/wiki/Iran",
-          img: "https://axel-travel.pro/img/flags_svgs/IR.svg"
-        },*/
+        },
         {
           name: "Albania",
           lat: 41,
           lon: 20,
           link: "https://pl.wikipedia.org/wiki/Albania",
-          img: "https://axel-travel.pro/img/flags_svgs/AL.svg",
         },
         {
           name: "Brazylia",
           lat: -10,
           lon: -55,
           link: "https://pl.wikipedia.org/wiki/Brazylia",
-          img: "https://axel-travel.pro/img/flags_svgs/BR.svg",
         },
         {
           name: "Serbia",
           lat: 44,
           lon: 21,
           link: "https://pl.wikipedia.org/wiki/Serbia",
-          img: "https://axel-travel.pro/img/flags_svgs/RS.svg",
         },
         {
           name: "Belize",
           lat: 17.25,
           lon: -88.75,
           link: "https://pl.wikipedia.org/wiki/Belize",
-          img: "https://axel-travel.pro/img/flags_svgs/BZ.svg",
         },
         {
           name: "Mjanma",
           lat: 22,
           lon: 98,
           link: "https://pl.wikipedia.org/wiki/Mjanma",
-          img: "https://axel-travel.pro/img/flags_svgs/MM.svg",
         },
         {
           name: "Bhutan",
           lat: 27.5,
           lon: 90.5,
           link: "https://pl.wikipedia.org/wiki/Bhutan",
-          img: "https://axel-travel.pro/img/flags_svgs/BT.svg",
         },
         {
           name: "Wenezuela",
           lat: 8,
           lon: -66,
           link: "https://pl.wikipedia.org/wiki/Wenezuela",
-          img: "https://axel-travel.pro/img/flags_svgs/VE.svg",
         },
         {
           name: "Liberia",
           lat: 6.5,
           lon: -9.5,
           link: "https://pl.wikipedia.org/wiki/Liberia",
-          img: "https://axel-travel.pro/img/flags_svgs/LR.svg",
         },
         {
           name: "Jamajka",
           lat: 18.25,
           lon: -77.5,
           link: "https://pl.wikipedia.org/wiki/Jamajka",
-          img: "https://axel-travel.pro/img/flags_svgs/JM.svg",
         },
         {
           name: "Polska",
           lat: 52,
           lon: 20,
           link: "https://pl.wikipedia.org/wiki/Polska",
-          img: "https://axel-travel.pro/img/flags_svgs/PL.svg",
         },
         {
           name: "Kajmany",
           lat: 19.3133,
           lon: -81.2546,
           link: "https://pl.wikipedia.org/wiki/Kajmany",
-          img: "https://axel-travel.pro/img/flags_svgs/KY.svg",
         },
         {
           name: "Brunei",
           lat: 4.5,
           lon: 114.66666666,
           link: "https://pl.wikipedia.org/wiki/Brunei",
-          img: "https://axel-travel.pro/img/flags_svgs/BN.svg",
         },
         {
           name: "Komory",
           lat: -12.16666666,
           lon: 44.25,
           link: "https://pl.wikipedia.org/wiki/Komory",
-          img: "https://axel-travel.pro/img/flags_svgs/KM.svg",
         },
         {
           name: "Guam",
           lat: 13.46666666,
           lon: 144.78333333,
           link: "https://pl.wikipedia.org/wiki/Guam",
-          img: "https://axel-travel.pro/img/flags_svgs/GU.svg",
         },
         {
           name: "Tonga",
           lat: -20,
           lon: -175,
           link: "https://pl.wikipedia.org/wiki/Tonga",
-          img: "https://axel-travel.pro/img/flags_svgs/TO.svg",
         },
         {
           name: "Kiribati",
           lat: 1.41666666,
           lon: 173,
           link: "https://pl.wikipedia.org/wiki/Kiribati",
-          img: "https://axel-travel.pro/img/flags_svgs/KI.svg",
         },
         {
           name: "Ghana",
           lat: 8,
           lon: -2,
           link: "https://pl.wikipedia.org/wiki/Ghana",
-          img: "https://axel-travel.pro/img/flags_svgs/GH.svg",
         },
         {
           name: "Czad",
           lat: 15,
           lon: 19,
           link: "https://pl.wikipedia.org/wiki/Czad",
-          img: "https://axel-travel.pro/img/flags_svgs/TD.svg",
         },
         {
           name: "Zimbabwe",
           lat: -20,
           lon: 30,
           link: "https://pl.wikipedia.org/wiki/Zimbabwe",
-          img: "https://axel-travel.pro/img/flags_svgs/ZW.svg",
         },
         {
           name: "Saint-Martin",
           lat: 18.0708,
           lon: 63.0501,
           link: "https://pl.wikipedia.org/wiki/Saint-Martin",
-          img: "https://axel-travel.pro/img/flags_svgs/MF.svg",
         },
         {
           name: "Mongolia",
           lat: 46,
           lon: 105,
           link: "https://pl.wikipedia.org/wiki/Mongolia",
-          img: "https://axel-travel.pro/img/flags_svgs/MN.svg",
         },
         {
           name: "Portugalia",
           lat: 39.5,
           lon: -8,
           link: "https://pl.wikipedia.org/wiki/Portugalia",
-          img: "https://axel-travel.pro/img/flags_svgs/PT.svg",
         },
         {
           name: "Samoa Amerykańskie",
           lat: -14.33333333,
           lon: -170,
           link: "https://pl.wikipedia.org/wiki/Samoa%20Ameryka%C5%84skie",
-          img: "https://axel-travel.pro/img/flags_svgs/WS.svg",
         },
         {
           name: "Kongo",
           lat: -1,
           lon: 15,
           link: "https://pl.wikipedia.org/wiki/Kongo",
-          img: "https://axel-travel.pro/img/flags_svgs/CG.svg",
         },
         {
           name: "Belgia",
           lat: 50.83333333,
           lon: 4,
           link: "https://pl.wikipedia.org/wiki/Belgia",
-          img: "https://axel-travel.pro/img/flags_svgs/BE.svg",
         },
         {
           name: "Izrael",
           lat: 31.47,
           lon: 35.13,
           link: "https://pl.wikipedia.org/wiki/Izrael",
-          img: "https://axel-travel.pro/img/flags_svgs/IL.svg",
         },
         {
           name: "Nowa Zelandia",
           lat: -41,
           lon: 174,
           link: "https://pl.wikipedia.org/wiki/Nowa%20Zelandia",
-          img: "https://axel-travel.pro/img/flags_svgs/NZ.svg",
         },
         {
           name: "Nikaragua",
           lat: 13,
           lon: -85,
           link: "https://pl.wikipedia.org/wiki/Nikaragua",
-          img: "https://axel-travel.pro/img/flags_svgs/NI.svg",
         },
         {
           name: "Anguilla",
           lat: 18.25,
           lon: -63.16666666,
           link: "https://pl.wikipedia.org/wiki/Anguilla",
-          img: "https://axel-travel.pro/img/flags_svgs/AI.svg",
         },
       ];
 
@@ -2119,7 +1895,7 @@
         document.body.appendChild(renderer.domElement);
 
         // Lights
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+        const ambientLight = new THREE.AmbientLight(0x98f6ff, 1);
         scene.add(ambientLight);
         const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
         directionalLight.position.set(0, 1, 0);
@@ -2139,7 +1915,7 @@
         // Load Earth texture
         const textureLoader = new THREE.TextureLoader(loadingManager);
         const earthTexture = textureLoader.load(
-          "https://cdn.glitch.global/6061b827-3701-4087-a4b1-a1aec1d09302/earth-with-clouds-15646.jpg?v=1744063342960"
+          "https://cdn.glitch.global/6061b827-3701-4087-a4b1-a1aec1d09302/earth_lights_2048.png?v=1741899516667"
         );
 
         // Create Earth sphere
@@ -2164,7 +1940,7 @@
           const pos = latLonToVector3(hp.lat, hp.lon, globeRadius + 0.5);
 
           // Create a marker sphere
-          const markerGeo = new THREE.SphereGeometry(0.1, 25, 25);
+          const markerGeo = new THREE.SphereGeometry(0.2, 16, 16);
           const markerMat = new THREE.MeshBasicMaterial({ color: 0x00eeff });
           const marker = new THREE.Mesh(markerGeo, markerMat);
           marker.position.copy(pos);
@@ -2176,7 +1952,7 @@
           marker.userData.baseScale = 1;
           marker.userData.activeScale = 1.8;
           // Base & active needle lengths
-          marker.userData.baseNeedleLength = 7.5;
+          marker.userData.baseNeedleLength = 10;
           marker.userData.activeNeedleLength = 25;
           // Base & active line widths (if supported)
           marker.userData.baseNeedleWidth = 1.5;
@@ -2296,6 +2072,10 @@
         searchInput.type = "text";
         searchInput.placeholder = "Znajdź kraj";
         searchInput.id = "search-input";
+        searchInput.style.background = "rgba(5,5,5,0.3)";
+        searchInput.style.borderRadius = "5px";
+        searchInput.style.color = "cyan";
+        searchInput.style.border = "1px solid cyan";
         searchInput.style.marginBottom = "20px"; // Optional: Space below the search field
         document.body.appendChild(searchInput);
 
@@ -2307,26 +2087,24 @@
 
         hotpoints.forEach((hp, idx) => {
           const li = document.createElement("li");
-          li.innerHTML = `<p class="pointhot">
-          <img src="${hp.img}" class="flag-img" alt="${hp.name}" />
-          ${hp.name}</p>`;
+          li.innerHTML = `<p class="pointhot">${hp.name}</p>`;
 
           const addButton = document.createElement("button");
           const dataButton = document.createElement("button");
           addButton.classList.add("addButton");
           dataButton.classList.add("addButton");
-          dataButton.textContent = "➣";
-          addButton.textContent = savedCountries.includes(hp.name) ? "✖" : "✔";
+          dataButton.textContent = "☔";
+          addButton.textContent = savedCountries.includes(hp.name) ? "✔" : "✖";
           if (savedCountries.includes(hp.name)) li.classList.add("saved");
 
           addButton.addEventListener("click", (e) => {
             if (!savedCountries.includes(hp.name)) {
               savedCountries.push(hp.name);
-              addButton.textContent = "✖";
+              addButton.textContent = "✔";
               li.classList.add("saved");
             } else {
               savedCountries.splice(savedCountries.indexOf(hp.name), 1);
-              addButton.textContent = "✔";
+              addButton.textContent = "✖";
               li.classList.remove("saved");
             }
             localStorage.setItem("visitedlist", JSON.stringify(savedCountries));
@@ -2436,8 +2214,8 @@
         const isSaved = savedCountries.includes(hotpoints[index].name); // Check if it's saved
 
         // Determine marker color (Magenta for saved, Green for active, default otherwise)
-        const markerColor = isSaved || shouldHighlight ? 0x0000ff : 0x00eeff; // Green for active or saved, blue otherwise
-        const needleColor = isSaved || shouldHighlight ? 0x0000ff : 0xffffff; // Green for active or saved, white otherwise
+        const markerColor = isSaved || shouldHighlight ? 0x00ff00 : 0x00eeff; // Green for active or saved, blue otherwise
+        const needleColor = isSaved || shouldHighlight ? 0x00ff00 : 0xffffff; // Green for active or saved, white otherwise
 
         // Scale
         const scale = shouldHighlight
